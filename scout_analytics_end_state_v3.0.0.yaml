@@ -1,0 +1,592 @@
+# Scout Analytics Dashboard v3.0.0 - Complete End-State Specification
+# This YAML defines the complete desired state for production deployment
+
+metadata:
+  product_name: "Scout Analytics Dashboard"
+  version: "3.0.0"
+  deployment_date: "2025-06-15"
+  environment: "production"
+  status: "active"
+  owner: "TBWA AI Analytics Platform"
+
+# Core Application Configuration
+application:
+  name: "Scout Analytics"
+  display_name: "Scout Analytics Dashboard - TBWA AI Platform"
+  description: "AI-powered retail intelligence platform for the Philippines market"
+  type: "web_dashboard"
+  framework: "react_typescript"
+  build_system: "vite"
+  
+  urls:
+    production: "https://scout-v0.vercel.app"
+    staging: "https://scout-mvp.vercel.app"
+    repository: "https://github.com/jgtolentino/scout-mvp"
+  
+  branding:
+    primary_color: "#004F4D"
+    accent_color: "#99C2B1"
+    logo: "/logo.svg"
+    favicon: "/favicon.ico"
+    theme: "professional_teal"
+    typography: "Segoe UI, San Francisco, Roboto"
+
+# Navigation & Layout Structure
+layout:
+  type: "sidebar_navigation"
+  responsive: true
+  mobile_first: true
+  
+  navigation_items:
+    - id: "overview"
+      label: "Overview"
+      icon: "📊"
+      path: "/overview"
+      description: "Executive KPI Dashboard"
+      default: true
+      widgets:
+        - "kpi_cards"
+        - "demographics_chart"
+        - "category_summary"
+        - "recent_activity"
+    
+    - id: "trends"
+      label: "Trends"
+      icon: "📈"
+      path: "/trends"
+      description: "Time Series Analysis"
+      widgets:
+        - "time_series_charts"
+        - "growth_analytics"
+        - "seasonal_patterns"
+        - "comparative_trends"
+    
+    - id: "products"
+      label: "Products"
+      icon: "📦"
+      path: "/products"
+      description: "Product Performance & SKU Analysis"
+      widgets:
+        - "product_grid"
+        - "category_breakdown"
+        - "brand_performance"
+        - "inventory_metrics"
+    
+    - id: "retail_bot"
+      label: "RetailBot"
+      icon: "🤖"
+      path: "/ai-assist"
+      description: "AI-Powered Business Insights"
+      widgets:
+        - "chat_interface"
+        - "insights_panel"
+        - "recommendations"
+        - "query_history"
+    
+    - id: "vibe_testbot"
+      label: "Vibe TestBot"
+      icon: "✨"
+      path: "/vibe"
+      description: "Quality Assurance Dashboard"
+      access_level: "admin"
+      widgets:
+        - "qa_dashboard"
+        - "test_results"
+        - "performance_metrics"
+        - "validation_status"
+
+# AI Assistant Configuration
+ai_assistants:
+  retailbot:
+    id: "retailbot"
+    version: "2.1"
+    enabled: true
+    display_name: "RetailBot"
+    description: "AI business intelligence assistant"
+    avatar: "/avatars/retailbot.png"
+    
+    capabilities:
+      - name: "insight_validation"
+        description: "Validate business insights against historical data"
+        confidence_threshold: 0.85
+      
+      - name: "kpi_interpretation"
+        description: "Explain KPI changes and provide context"
+        auto_trigger: true
+      
+      - name: "recommendation_engine"
+        description: "Generate actionable business recommendations"
+        personalization: true
+      
+      - name: "natural_language_query"
+        description: "Process complex business questions"
+        max_response_time: 600
+    
+    integration:
+      type: "enhanced_chat"
+      position: "sidebar_panel"
+      context_awareness: true
+      data_sources:
+        - "supabase_analytics"
+        - "azure_data_lake"
+        - "real_time_metrics"
+  
+  learnbot:
+    id: "learnbot"
+    version: "2.0"
+    enabled: true
+    display_name: "Learning Assistant"
+    description: "Interactive tutorial and help system"
+    
+    capabilities:
+      - name: "contextual_help"
+        description: "Provide help based on current user location"
+        trigger: "automatic"
+      
+      - name: "feature_discovery"
+        description: "Guide users through new features"
+        progressive: true
+      
+      - name: "interactive_tutorials"
+        description: "Step-by-step feature walkthroughs"
+        persistence: true
+    
+    integration:
+      type: "tooltip_overlay"
+      position: "contextual"
+      smart_triggers: true
+      onboarding_flow: true
+  
+  vibetestbot:
+    id: "vibe-testbot"
+    version: "1.2"
+    enabled: true
+    display_name: "Vibe TestBot"
+    description: "Automated QA and validation assistant"
+    access_level: "admin"
+    
+    qa_checks:
+      - name: "layout_consistency"
+        frequency: "continuous"
+        alert_threshold: "medium"
+      
+      - name: "data_presence_validation"
+        frequency: "real_time"
+        alert_threshold: "high"
+      
+      - name: "component_render_verification"
+        frequency: "on_deploy"
+        alert_threshold: "critical"
+      
+      - name: "performance_monitoring"
+        frequency: "continuous"
+        metrics: ["lcp", "fid", "cls"]
+    
+    integration:
+      type: "qa_dashboard"
+      position: "dedicated_page"
+      automated_reporting: true
+
+# Key Performance Indicators Configuration
+kpi_metrics:
+  primary_cards:
+    - id: "total_revenue"
+      name: "Total Revenue"
+      icon: "💰"
+      format: "currency_php"
+      precision: 0
+      growth_indicator: true
+      drill_down: "regional_breakdown"
+      target: 15000000
+      
+    - id: "transaction_count"
+      name: "Transactions"
+      icon: "🛒"
+      format: "number_abbreviated"
+      precision: 1
+      growth_indicator: true
+      drill_down: "hourly_breakdown"
+      target: 10000
+      
+    - id: "active_customers"
+      name: "Active Customers"
+      icon: "👥"
+      format: "number"
+      precision: 0
+      growth_indicator: true
+      drill_down: "customer_segments"
+      target: 5000
+      
+    - id: "average_basket"
+      name: "Avg Basket Size"
+      icon: "📦"
+      format: "currency_php"
+      precision: 2
+      growth_indicator: true
+      drill_down: "category_contribution"
+      target: 1500
+  
+  secondary_metrics:
+    - conversion_rate
+    - customer_lifetime_value
+    - repeat_purchase_rate
+    - market_share_percentage
+    - inventory_turnover
+    - gross_margin_percentage
+
+# Data Visualization Specifications
+charts_and_visualizations:
+  kpi_cards:
+    style: "gradient_enhanced"
+    animation: "smooth_transitions"
+    responsive: true
+    interactive: true
+    
+  demographic_charts:
+    population_pyramid:
+      enabled: true
+      age_groups: ["18-24", "25-34", "35-44", "45-54", "55+"]
+      gender_split: true
+      
+    donut_charts:
+      category_distribution: true
+      regional_distribution: true
+      brand_performance: true
+      
+  time_series:
+    line_charts:
+      multi_series: true
+      zoom_capability: true
+      date_range_selector: true
+      forecast_overlay: true
+      
+    area_charts:
+      stacked_revenue: true
+      category_trends: true
+      
+  advanced_visualizations:
+    heat_maps:
+      regional_performance: true
+      product_correlation: true
+      
+    sankey_diagrams:
+      customer_journey: true
+      revenue_flow: true
+
+# Data Integration & APIs
+data_sources:
+  primary_database:
+    provider: "supabase"
+    url: "${VITE_SUPABASE_URL}"
+    api_key: "${VITE_SUPABASE_ANON_KEY}"
+    real_time: true
+    
+    tables:
+      - name: "transactions"
+        primary_key: "transaction_id"
+        indexes: ["customer_id", "product_id", "timestamp"]
+        
+      - name: "customer_profiles"
+        primary_key: "customer_id"
+        pii_protected: true
+        
+      - name: "product_catalog"
+        primary_key: "product_id"
+        metadata_rich: true
+        
+      - name: "regional_data"
+        primary_key: "region_id"
+        geographic: true
+  
+  data_warehouse:
+    provider: "azure_adls2"
+    path: "scout/data-ingest"
+    retention_days: 90
+    batch_processing: true
+    compression: "gzip"
+    
+  api_endpoints:
+    ask_scout:
+      route: "/api/ask-scout"
+      method: "POST"
+      authentication: "bearer_token"
+      rate_limit: "100_per_minute"
+      response_format: "enhanced_insights"
+      metadata_scoring: true
+      
+    real_time_metrics:
+      route: "/api/metrics/live"
+      method: "GET"
+      websocket: true
+      update_frequency: "30_seconds"
+
+# Security & Compliance Configuration
+security:
+  authentication:
+    provider: "supabase_auth"
+    session_duration: "8_hours"
+    refresh_tokens: true
+    mfa_supported: true
+    
+  authorization:
+    rbac_enabled: true
+    roles:
+      - name: "admin"
+        permissions: ["all"]
+        
+      - name: "regional_director"
+        permissions: ["view_all", "export_reports", "ai_assistants"]
+        
+      - name: "brand_analyst"
+        permissions: ["view_products", "view_trends", "ai_insights"]
+        
+      - name: "analytics_team"
+        permissions: ["view_all", "data_export", "advanced_analytics"]
+  
+  data_protection:
+    snowwhite_sanitized: true
+    pii_exposure: false
+    gdpr_compliant: true
+    data_anonymization: true
+    
+    sanitization_rules:
+      - field: "customer_name"
+        action: "hash"
+        
+      - field: "email_address"
+        action: "mask"
+        
+      - field: "phone_number"
+        action: "remove"
+  
+  headers:
+    content_security_policy: "default-src 'self'; script-src 'self' 'unsafe-inline'"
+    x_content_type_options: "nosniff"
+    x_xss_protection: "1; mode=block"
+    referrer_policy: "strict-origin-when-cross-origin"
+
+# Performance & Quality Requirements
+performance:
+  targets:
+    initial_load_time: "< 2s"
+    lighthouse_performance: "> 90"
+    lighthouse_accessibility: "> 95"
+    lighthouse_best_practices: "> 90"
+    lighthouse_seo: "> 85"
+  
+  core_web_vitals:
+    lcp_threshold: "2.5s"
+    fid_threshold: "100ms"
+    cls_threshold: "0.1"
+    
+  optimization:
+    code_splitting: true
+    lazy_loading: true
+    image_optimization: true
+    caching_strategy: "aggressive"
+    cdn_enabled: true
+    
+  monitoring:
+    real_time_alerts: true
+    performance_budgets: true
+    error_tracking: true
+    uptime_monitoring: true
+
+# Development & Deployment Configuration
+development:
+  tech_stack:
+    frontend:
+      framework: "react"
+      version: "18+"
+      typescript: true
+      
+    build_tools:
+      bundler: "vite"
+      version: "6.x"
+      hot_reload: true
+      
+    styling:
+      framework: "tailwindcss"
+      version: "4.x"
+      postcss: true
+      
+    state_management:
+      library: "zustand"
+      persistence: true
+      
+    data_visualization:
+      library: "recharts"
+      custom_components: true
+      
+    routing:
+      library: "react-router"
+      version: "7.x"
+      lazy_routes: true
+  
+  quality_assurance:
+    testing:
+      unit_tests: "jest"
+      integration_tests: "react-testing-library"
+      e2e_tests: "playwright"
+      coverage_target: "> 80%"
+      
+    code_quality:
+      linting: "eslint"
+      formatting: "prettier"
+      type_checking: "typescript"
+      
+    accessibility:
+      wcag_compliance: "AA"
+      automated_testing: "axe-core"
+      
+  deployment:
+    provider: "vercel"
+    environment: "production"
+    auto_deploy: true
+    preview_deployments: true
+    
+    build_command: "npm run build"
+    output_directory: "dist"
+    node_version: "18.x"
+    
+    environment_variables:
+      VITE_SUPABASE_URL: "${SUPABASE_URL}"
+      VITE_SUPABASE_ANON_KEY: "${SUPABASE_ANON_KEY}"
+      AZURE_OPENAI_ENDPOINT: "${AZURE_OPENAI_ENDPOINT}"
+      AZURE_OPENAI_API_KEY: "${AZURE_OPENAI_API_KEY}"
+
+# Feature Flags & Experimentation
+feature_flags:
+  ai_recommendations: true
+  real_time_updates: true
+  advanced_filtering: true
+  export_functionality: true
+  mobile_optimizations: true
+  dark_mode: false
+  beta_features: false
+
+# Analytics & Monitoring
+analytics:
+  user_analytics:
+    provider: "vercel_analytics"
+    privacy_compliant: true
+    anonymized: true
+    
+  performance_monitoring:
+    provider: "web_vitals"
+    real_user_monitoring: true
+    synthetic_monitoring: true
+    
+  error_tracking:
+    provider: "sentry"
+    source_maps: true
+    release_tracking: true
+    
+  business_metrics:
+    dashboard_usage: true
+    feature_adoption: true
+    user_engagement: true
+    conversion_tracking: true
+
+# Backup & Recovery
+backup_strategy:
+  database:
+    frequency: "daily"
+    retention: "30_days"
+    encryption: true
+    
+  code_repository:
+    provider: "github"
+    branch_protection: true
+    automated_backups: true
+    
+  assets:
+    provider: "azure_blob"
+    geo_redundancy: true
+    versioning: true
+    
+  disaster_recovery:
+    rto_target: "1_hour"
+    rpo_target: "15_minutes"
+    automated_failover: true
+
+# Documentation & Support
+documentation:
+  user_guides: true
+  api_documentation: true
+  component_library: true
+  deployment_guides: true
+  troubleshooting: true
+  
+support:
+  help_system: "integrated"
+  contact_methods: ["email", "chat"]
+  sla: "business_hours"
+  escalation_matrix: true
+
+# Compliance & Audit
+compliance:
+  standards:
+    - "WCAG 2.1 AA"
+    - "GDPR"
+    - "SOC 2 Type II"
+    
+  audit_trails:
+    user_actions: true
+    data_access: true
+    system_changes: true
+    
+  reporting:
+    compliance_reports: "quarterly"
+    security_assessments: "annual"
+    performance_reviews: "monthly"
+
+# Success Metrics & KPIs
+success_criteria:
+  technical:
+    performance_score: "> 90"
+    uptime_percentage: "> 99.9%"
+    error_rate: "< 0.1%"
+    security_vulnerabilities: "0_critical"
+    
+  business:
+    user_adoption: "> 80%"
+    feature_usage: "> 60%"
+    user_satisfaction: "> 4.5/5"
+    time_to_insight: "< 30s"
+    
+  operational:
+    deployment_frequency: "weekly"
+    bug_resolution_time: "< 48h"
+    documentation_coverage: "100%"
+    test_coverage: "> 80%"
+
+# Future Roadmap
+roadmap:
+  q3_2025:
+    - "Advanced ML predictions"
+    - "Custom dashboard builder"
+    - "Mobile app companion"
+    
+  q4_2025:
+    - "Real-time collaboration"
+    - "Advanced export capabilities"
+    - "Third-party integrations"
+    
+  q1_2026:
+    - "Embedded analytics platform"
+    - "White-label solutions"
+    - "Enterprise features"
+
+# Version Control & Change Management
+version_control:
+  current_version: "3.0.0"
+  schema_version: "1.0"
+  last_updated: "2025-06-15"
+  next_review: "2025-07-15"
+  
+change_management:
+  approval_required: true
+  testing_required: true
+  documentation_required: true
+  rollback_plan: true

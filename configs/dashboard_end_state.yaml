@@ -1,0 +1,99 @@
+# 🧠 Scout Analytics – TBWA FMCG Edition (Slimmed to 4 Strategic Pages)
+
+dashboard:
+  id: scout-tbwa-core
+  version: 1.3.1
+  mode: production
+  title: TBWA Retail Intelligence – Scout
+  subtitle: Actionable FMCG Insights for Disruption
+  theme: tbwa-retail
+  # Data sources reflect .env config
+  data_sources:
+    - supabase[transactions_fmcg]
+    - supabase[transaction_items_fmcg]
+    - yummy-agent
+    - retailbot
+  env:
+    VITE_SUPABASE_URL: https://jrxepdlkgdwwjxdeetmb.supabase.co
+    VITE_SUPABASE_ANON_KEY: <redacted>
+    AZURE_OPENAI_ENDPOINT: https://tbwa-openai.openai.azure.com/
+    AZURE_OPENAI_API_KEY: <redacted>
+    DATABASE_URL: <redacted>
+
+layout:
+  navigation: side
+  header: sticky
+  filters:
+    orientation: horizontal
+    drawer_enabled: true
+    type: responsive
+    fields:
+      - name: brand
+        label: 🏷️ Brand
+        type: multi-select
+        source: distinct_brands
+      - name: category
+        label: 🧂 Category
+        type: multi-select
+        source: distinct_categories
+      - name: region
+        label: 🗺️ Region
+        type: multi-select
+        source: distinct_regions
+      - name: date
+        label: 📅 Date Range
+        type: date-range
+        source: transactions_fmcg
+
+pages:
+  - id: executive
+    title: Executive Summary
+    icon: 📊
+    components:
+      - kpi_row
+      - trend_chart
+      - region_heatmap
+      - panel_ai_insights
+
+  - id: performance
+    title: Performance
+    icon: 📈
+    components:
+      - product_mix_section
+      - transaction_trends_section
+      - consumer_insights_section
+
+  - id: promo_competition
+    title: Promo & Competition
+    icon: ⚔️
+    components:
+      - yummy_promotion_panel
+      - yummy_competitor_panel
+
+  - id: scout_ai
+    title: Scout AI
+    icon: 🤖
+    components:
+      - scout_ai_assistant
+      - persistent_chat_widget
+      - openai_streaming
+      - context_aware_queries
+      - voice_mode_toggle
+
+footer:
+  diagnostics: true
+  export_controls: true
+  data_toggle: real_sim
+
+meta:
+  last_updated: 2025-06-15T03:45:00+08:00
+  deployed_by: jgtolentino
+  branding: tbwa
+  license: enterprise
+  context_prompts_enabled: true
+# .env config reflected in env block above for traceability
+# Only 4 pages: Executive, Performance, Promo & Competition, Scout AI
+# All components mapped to new React structure
+# Data sources and endpoints match .env
+# Obsolete pages/components removed
+# End of file

@@ -1,0 +1,168 @@
+dashboard:
+  name: "Scout Analytics"
+  version: "3.0.0"
+  description: "AI-Powered Retail Intelligence Platform"
+  deployed_at: "https://scout-mvp.vercel.app"
+
+layout:
+  sidebar_navigation:
+    - label: "Overview"
+      icon: "📊"
+      path: "/overview"
+      description: "Executive Overview"
+      widgets: ["KPI Cards", "Demographics", "Category Summary"]
+    - label: "Trends"
+      icon: "📈"
+      path: "/trends"
+      description: "Transaction Trends"
+      widgets: ["Time Series", "Growth Analytics"]
+    - label: "Products"
+      icon: "📦"
+      path: "/products"
+      description: "Product Mix & SKU"
+      widgets: ["Analytics", "Performance"]
+    - label: "RetailBot"
+      icon: "🤖"
+      path: "/ai-assist"
+      description: "AI Insights"
+      widgets: ["AI Powered", "Recommendations"]
+    - label: "Vibe TestBot"
+      icon: "✨"
+      path: "/vibe"
+      description: "AI Code QA"
+      widgets: ["v1.2", "Testing"]
+
+ai_assistants:
+  retailbot:
+    id: "retailbot"
+    version: "2.1"
+    enabled: true
+    display_name: "RetailBot"
+    capabilities:
+      - insight_validation
+      - kpi_score_feedback
+      - auto_recommendations
+      - business_logic_reasoning
+    integration: "enhanced"
+
+  learnbot:
+    id: "learnbot"
+    version: "2.0"
+    enabled: true
+    display_name: "Learning Assistant"
+    tooltip_injection: true
+    context_awareness: true
+    capabilities:
+      - interactive_tutorials
+      - contextual_help
+      - feature_guidance
+    integration: "tooltip_overlay"
+
+  vibetestbot:
+    id: "vibe-testbot"
+    version: "1.2"
+    enabled: true
+    display_name: "Vibe TestBot"
+    qa_checks:
+      - layout_consistency
+      - data_presence
+      - component_render
+      - performance_validation
+    integration: "qa_dashboard"
+
+ask_scout_api:
+  route: "/api/ask-scout"
+  metadata_scoring: true
+  role_awareness: true
+  sources:
+    - Supabase
+    - Azure SQL
+    - ADLS2
+  latency_threshold_ms: 600
+  response_format: "enhanced_insights"
+
+kpi_metrics:
+  primary:
+    - name: "Total Revenue"
+      icon: "💰"
+      format: "currency_php"
+      growth_indicator: true
+    - name: "Transactions"
+      icon: "🛒"
+      format: "number"
+      growth_indicator: true
+    - name: "Active Customers"
+      icon: "👥"
+      format: "number"
+      growth_indicator: true
+    - name: "Avg Basket"
+      icon: "📦"
+      format: "currency_php"
+      growth_indicator: true
+
+storage_config:
+  supabase:
+    sync_enabled: true
+    tables:
+      - transactions
+      - customer_profiles
+      - product_catalog
+      - regional_data
+  azure_adls2:
+    path: "scout/data-ingest"
+    retention_days: 90
+    batch_processing: true
+
+security:
+  snowwhite_sanitized: true
+  pii_exposure: false
+  client_safe_deployment: true
+  access_roles:
+    - Admin
+    - Regional Director
+    - Brand Analyst
+    - Analytics Team
+  sanitization_level: "production_ready"
+
+deployment:
+  provider: "Vercel"
+  version_tag: "v3.0.0"
+  rollback_available: true
+  environment: "production"
+  url: "https://scout-mvp.vercel.app"
+  snapshots:
+    - ui/layouts/retail_dashboard_v2.yaml
+    - ui/layouts/retail_dashboard_v3.yaml
+
+features:
+  enhanced_ui:
+    gradient_headers: true
+    interactive_charts: true
+    real_time_updates: true
+    responsive_design: true
+  
+  data_visualization:
+    population_pyramid: true
+    donut_charts: true
+    line_charts: true
+    kpi_cards: true
+    filter_system: true
+  
+  ai_integration:
+    contextual_insights: true
+    auto_recommendations: true
+    qa_validation: true
+    tutorial_system: true
+
+branding:
+  primary_color: "#004F4D"
+  accent_color: "#99C2B1"
+  typography: "Segoe UI"
+  theme: "professional_teal"
+  client_ready: true
+
+performance:
+  target_load_time: "< 2s"
+  lighthouse_score: "> 90"
+  mobile_optimized: true
+  accessibility_compliant: true

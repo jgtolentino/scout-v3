@@ -1,0 +1,6 @@
+environment        = "prod"
+db_admin_password  = "your_secure_password_here"
+ph_alert_phone     = "9123456789"  # +63 912 345 6789
+github_account     = "tbwa-philippines"
+kv_allowed_ips     = ["123.456.78.90", "98.765.43.21"]
+openai_allowed_ips = ["123.456.78.90"] 

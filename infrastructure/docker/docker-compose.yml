@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  dashboard:
+    build:
+      context: ../../
+      dockerfile: infrastructure/docker/Dockerfile.dashboard
+    ports:
+      - "80:80"
+    depends_on:
+      - retailbot-api
+    environment:
+      NODE_ENV: production
+      VITE_SUPABASE_URL: ${SUPABASE_URL}
+      VITE_SUPABASE_KEY: ${SUPABASE_KEY}
+      VITE_AZURE_OPENAI_KEY: ${AZURE_OPENAI_KEY}
+
+  retailbot-api:
+    build:
+      context: ../../
+      dockerfile: infrastructure/docker/Dockerfile.retailbot-api
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      AZURE_OPENAI_KEY: ${AZURE_OPENAI_KEY}
+      PORT: 3001 

@@ -1,0 +1,9 @@
+# Scout Analytics Dashboard v3.0.0
+# Production specification file
+
+version: 3.0.0
+status: production
+promotable: false
+deployment_path: /
+components:
+  # ...existing component and agent breakdown from preview...

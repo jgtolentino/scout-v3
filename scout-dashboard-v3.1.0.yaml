@@ -1,0 +1,277 @@
+# ===========================================================
+# 🎯 Scout Analytics Dashboard v3.1.0 - Client Delivery 
+# ✅ Production-Ready | Azure OpenAI | Horizontal Filters
+# ===========================================================
+
+version: "3.1.0"
+effective_date: "2025-06-16"
+environment: "production"
+region: "ph"
+deployment_target: "https://scout-mvp.vercel.app"
+
+# Core Configuration
+dashboard:
+  name: "Scout Analytics"
+  description: "Philippine FMCG retail intelligence platform"
+  branding:
+    remove_pulser: true
+    remove_insight_pulse: true
+    client_mode: true
+    primary_colors: ["#1e3a8a", "#f59e0b", "#10b981"]
+
+# Navigation Structure
+navigation:
+  layout: "sidebar-left"
+  collapsible: true
+  tooltip_mode: true
+  pages:
+    - id: "overview"
+      name: "Overview" 
+      icon: "Home"
+      path: "/"
+      description: "Executive dashboard"
+    - id: "trends"
+      name: "Trends"
+      icon: "TrendingUp" 
+      path: "/trends"
+      description: "Regional & temporal analysis"
+    - id: "products"
+      name: "Product Mix"
+      icon: "Package"
+      path: "/products" 
+      description: "Category & basket analysis"
+    - id: "consumers"
+      name: "Consumers"
+      icon: "Users"
+      path: "/consumers"
+      description: "Demographics & behavior"
+    - id: "retailbot"
+      name: "RetailBot"
+      icon: "Bot"
+      path: "/retailbot"
+      description: "AI insights & assistance"
+
+# Filter System
+filters:
+  layout: "horizontal-top-bar"
+  style: "pill-based"
+  sticky: true
+  live_data_binding: true
+  context_sensitive: true
+  
+  filter_types:
+    - date_range:
+        display: "compact"
+        format: "MMM d - MMM d"
+        quick_presets: ["7d", "30d", "90d"]
+    - categories:
+        display: "pills"
+        icons: true
+        max_visible: 2
+        overflow_indicator: true
+    - brands:
+        display: "pills" 
+        highlight_tbwa: true
+        max_visible: 2
+    - regions:
+        display: "pills"
+        drill_down_enabled: true
+        max_visible: 2
+
+# Page Specifications
+pages:
+  
+  # Overview Page
+  overview:
+    data_source: "transactions_fmcg"
+    kpi_cards:
+      - total_revenue: 
+          format: "₱{value:,.2f}"
+          source: "sum(total_amount)"
+      - total_transactions:
+          format: "{value:,}"
+          source: "count(*)"
+      - unique_customers:
+          format: "{value:,}"
+          source: "count(distinct customer_id)"
+      - avg_order_value:
+          format: "₱{value:,.2f}"
+          source: "avg(total_amount)"
+    
+  # Trends Page (Regional Analysis)
+  trends:
+    features:
+      - geo_heatmap:
+          type: "regional_performance"
+          drill_down: true
+          color_scale: ["#gray-300", "#yellow-400", "#red-600"]
+          click_action: "apply_region_filter"
+          performance_under_5s: true
+      - top_regions_table:
+          limit: 8
+          sortable: true
+          metrics: ["revenue", "transactions", "customers", "growth"]
+      - time_series_chart:
+          period: "30_days"
+          type: "bar"
+          hover_tooltips: true
+          
+  # Product Mix Page  
+  products:
+    charts:
+      - category_treemap:
+          sizing: "volume"
+          coloring: "performance_delta"
+          dynamic_grid: true
+      - category_revenue_chart:
+          type: "bar"
+          limit: 10
+          source: "category_revenue_summary"
+      - basket_distribution:
+          type: "histogram"
+          source: "basket_size_distribution"
+      - substitution_sankey:
+          type: "sankey"
+          max_flows: 5
+          fallback: "substitution_table"
+          
+  # Consumers Page
+  consumers:
+    charts:
+      - age_distribution:
+          type: "donut"
+          source: "customer_age_groups"
+      - gender_distribution:
+          type: "donut"
+          source: "customer_gender"
+      - income_bracket:
+          type: "bar"
+          source: "customer_income"
+      - customer_segments:
+          type: "table"
+          source: "customer_segments"
+          
+  # RetailBot Page
+  retailbot:
+    ai_assistant:
+      provider: "azure-openai"
+      model: "gpt-4"
+      context_injection: true
+      quick_actions:
+        - revenue_trends
+        - top_products
+        - customer_insights
+        - recommendations
+      system_prompt: |
+        You are RetailBot, an expert retail analytics AI assistant for Philippine FMCG data.
+        Provide data-driven insights with specific metrics and actionable recommendations.
+        Always cite actual numbers from the current dataset when available.
+
+# AI Integration
+ai_insights:
+  provider: "azure-openai"
+  stream_enabled: true
+  derived_from_live_data: true
+  
+  modules:
+    enabled:
+      - retailbot  # Main AI assistant
+      - learnbot   # Tutorial system
+    disabled:
+      - writebot   # Dev only
+      - testbot    # Dev only
+      
+  context_analysis:
+    - color_association: true
+    - cultural_nlu_patterns: true  
+    - nickname_alias_detection: true
+    - generational_signals: true
+    - brand_loyalty_patterns: true
+
+# Data Sources
+data_sources:
+  primary: "transactions_fmcg"
+  views:
+    - geo_revenue_view
+    - category_revenue_summary
+    - basket_size_distribution
+    - substitution_table
+    - customer_segments
+    
+  performance_requirements:
+    - query_timeout: "5s"
+    - page_load: "3s"
+    - filter_response: "1s"
+
+# Quality Assurance
+qa_validation_required:
+  charts:
+    - regional_map: "Must populate all active regions"
+    - category_revenue: "Top 10 categories only"
+    - sku_substitution: "Sankey with table fallback"
+    - basket_distribution: "From live dataset, no mock data"
+  
+  ai_responses:
+    - context_validation: "Must derive from streaming data"
+    - metric_accuracy: "Cross-validate with SQL views"
+    - response_time: "Under 3 seconds"
+    
+  filters:
+    - live_binding: "All filters must query Supabase"
+    - no_hardcoded_data: "Zero mock data allowed"
+    - performance: "Filter changes under 1s"
+
+# Deployment Configuration
+deployment:
+  platform: "vercel"
+  build_optimization: true
+  bundle_analysis: true
+  performance_monitoring: true
+  
+  environment_variables:
+    required:
+      - VITE_SUPABASE_URL
+      - VITE_SUPABASE_ANON_KEY
+      - VITE_AZURE_OPENAI_ENDPOINT
+      - VITE_AZURE_OPENAI_KEY
+      
+  verification_checklist:
+    - pulser_branding_removed: true
+    - all_charts_functional: true
+    - filters_live_bound: true
+    - ai_responses_contextual: true
+    - drill_downs_working: true
+    - mobile_responsive: true
+
+# Success Metrics
+success_criteria:
+  performance:
+    - lighthouse_score: ">90"
+    - first_contentful_paint: "<2s"
+    - cumulative_layout_shift: "<0.1"
+    
+  functionality:
+    - zero_empty_charts: true
+    - all_drill_downs_working: true
+    - filter_accuracy: "100%"
+    - ai_response_relevance: ">95%"
+    
+  data_quality:
+    - live_data_only: true
+    - metric_consistency: true
+    - no_hardcoded_fallbacks: true
+
+# Version Control
+changelog:
+  v3.1.0:
+    - "Added RetailBot AI assistant page"
+    - "Implemented horizontal filter pill layout"
+    - "Created GeoHeatMap with drill-down functionality"
+    - "Enhanced Trends page with regional analysis"
+    - "Removed all Pulser/InsightPulseAI branding"
+    - "Optimized bundle size and performance"
+    
+previous_versions:
+  v3.0.0: "FMCG dataset integration"
+  v2.5.0: "Azure OpenAI integration"
+  v2.0.0: "Supabase backend migration"

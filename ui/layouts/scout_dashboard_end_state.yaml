@@ -1,0 +1,50 @@
+version: 3.0.0
+dashboard:
+  title: Scout Analytics
+  subtitle: AI-Powered Retail Intelligence
+  deployment_url: https://ai-agency-sage.vercel.app/scout
+  ai_agents:
+    - name: RetailBot
+      function: AI-powered insights
+    - name: LearnBot
+      function: Onboarding + Tooltip
+    - name: Vibe TestBot
+      function: QA validation
+  navigation:
+    - name: Overview
+      route: /scout/overview
+    - name: Trends
+      route: /scout/trends
+    - name: Products
+      route: /scout/products
+    - name: RetailBot
+      route: /scout/retailbot
+    - name: Vibe TestBot
+      route: /scout/vibe
+  components:
+    kpis:
+      - Total Revenue
+      - Transactions
+      - Active Customers
+      - Avg Basket
+    demographics:
+      type: age-gender-breakdown
+      format: horizontal-bar
+    charts:
+      - DailyTransactionChart
+      - RevenueDistributionChart
+      - ShoppingTimeHeatmap
+    ai_status:
+      badge_component: ScoutStatusBadge.tsx
+      metrics:
+        - response_time: 446ms
+        - confidence: 79%
+        - signal: "NCR leads ₱1.2M, Mindanao +18%"
+  data_sources:
+    - azure_sql
+    - supabase
+    - adls2
+  deployment:
+    environment: production
+    vercel_project: ai-agency
+    preview_to_prod: enabled

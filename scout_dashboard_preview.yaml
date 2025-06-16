@@ -1,0 +1,352 @@
+# scout_dashboard_preview.yaml
+# Product Requirement Document (PRD) - Scout Analytics Dashboard v3.1-preview
+# Owner: InsightPulseAI – TBWA Deployment Team
+# Status: Preview (Staging) – enhanced with new SKU charts and deployment pattern
+
+version: 3.1.0-preview
+project: scout-analytics
+domain: https://scout-mvp-git-preview-ai-analytics-platform.vercel.app
+status: preview
+deployed_at: '2025-06-16'
+last_qa_validation: pending
+deployment_pattern: preview_promote_prod
+
+# 🎯 Objective
+objective: |
+  Preview environment for Scout Analytics v3.1 featuring enhanced product analysis with 
+  interactive SKU combination networks and substitution Sankey charts. This version 
+  includes the complete 5-page AI-powered retail analytics dashboard under the Scout 
+  Analytics brand with preview → promote → prod deployment pattern.
+
+# 🔧 Tech Stack
+tech_stack:
+  framework: nextjs
+  version: "14.0.4"
+  language: typescript
+  style: tailwind
+  visualization:
+    - recharts
+    - chartjs
+    - d3_svg_sankey
+    - custom_interactive_networks
+  state_management: zustand
+  backend:
+    - supabase
+    - azure_sql
+  ai_integration:
+    - openai_gpt4
+    - pulser_orchestration_4.0.0
+  deployment: vercel
+  design_system: tbwa_custom_tokens
+
+# 🧠 Page Structure & Modules (Enhanced)
+pages:
+  - name: Overview
+    path: /
+    title: "Scout Analytics Dashboard"
+    subtitle: "AI-Powered Retail Intelligence Platform"
+    modules:
+      - KPI_Cards:
+          components:
+            - revenue_card
+            - transactions_card
+            - customers_card
+            - basket_size_card
+      - AgeDistribution:
+          component: PopulationPyramid
+          type: stacked_bars
+          data_source: demographic_breakdown
+      - CategoryLeaders:
+          component: CategorySummary
+          type: revenue_ranking
+          top_categories: 5
+      - RegionalPerformance:
+          component: RegionalSnapshot
+          regions: ["Metro Manila", "Cebu", "Davao"]
+          metrics: ["revenue", "growth"]
+
+  - name: Trends
+    path: /trends
+    title: "Transaction Trends"
+    subtitle: "Time-series analysis and revenue patterns"
+    modules:
+      - DailyTransactionChart:
+          component: DailyTransactionChart
+          type: time_series_line
+          features: ["hover_tooltips", "transaction_revenue_toggle"]
+      - RevenueBoxPlot:
+          component: RevenueDistributionChart
+          type: statistical_box_plot
+          periods: ["daily", "weekly", "monthly"]
+      - ShoppingTimeHeatmap:
+          component: ShoppingTimeHeatmap
+          type: 24x7_heatmap
+          features: ["peak_detection", "interactive_cells"]
+      - TrendFilters:
+          toggles: ["time_of_day", "weekday", "location", "category"]
+
+  - name: Products
+    path: /products
+    title: "Product Mix & SKU Dynamics"
+    subtitle: "Category performance and substitution analysis"
+    status: enhanced_v3.1
+    modules:
+      - BasketShareAnalysis:
+          component: BasketShareTreemap
+          type: treemap_visualization
+          drill_down: brand_level
+      - SKUCombinationNetwork:
+          component: SKUCombinationNetwork
+          type: interactive_network_graph
+          features: ["node_clustering", "relationship_strength", "cross_sell_suggestions"]
+          status: new_v3.1
+      - SubstitutionSankeyChart:
+          component: SubstitutionSankeyChart
+          type: sankey_flow_diagram
+          features: ["flow_thickness", "interactive_paths", "substitution_rates"]
+          status: new_v3.1
+      - CategoryBreakdown:
+          component: CategoryPerformanceSummary
+          type: revenue_ranking
+          top_categories: 5
+      - BasketSizeAnalysis:
+          component: BasketSizeDistribution
+          type: histogram_visualization
+          metrics: ["value_distribution", "item_count_distribution"]
+
+  - name: "AI Assist"
+    path: /ai-assist
+    title: "Scout AI Assistant"
+    subtitle: "Unified LearnBot + RetailBot + Vibe TestBot Intelligence"
+    modules:
+      - RetailBotPanel:
+          agent: RetailBot
+          purpose: "Smart prompt for insights per filter combo"
+          capabilities: ["kpi_validation", "trend_analysis", "recommendations"]
+      - VibeTestBotPanel:
+          agent: "Vibe TestBot"
+          purpose: "Debugging interface for query + data issues"
+          capabilities: ["real_time_probing", "code_qa", "performance_monitoring"]
+      - AIRecommendationCards:
+          component: RecommendationGenerator
+          sources: ["retailbot_insights", "behavioral_patterns"]
+
+# 🤖 AI Agents Integration
+agents:
+  - name: RetailBot
+    icon: "🛍️"
+    color: green
+    purpose: "FMCG analytics specialist"
+    integration: unified_ai_panel
+    capabilities:
+      - kpi_validation
+      - trend_analysis
+      - recommendation_engine
+      - data_quality_checks
+
+  - name: LearnBot
+    icon: "🎓"
+    color: blue
+    purpose: "Dashboard tutorials & help"
+    integration: unified_ai_panel
+    capabilities:
+      - interactive_tooltips
+      - step_by_step_guidance
+      - feature_explanations
+      - keyboard_shortcuts
+
+  - name: "Vibe TestBot"
+    icon: "✨"
+    color: purple
+    purpose: "AI code QA assistant"
+    integration: unified_ai_panel
+    capabilities:
+      - real_time_insight_probing
+      - no_reload_testing
+      - code_quality_analysis
+      - performance_monitoring
+
+# 📊 Data Sources
+data_sources:
+  supabase:
+    tables:
+      - consumer_segments
+      - transactions
+      - product_catalog
+      - customer_demographics
+      - sku_combinations
+      - substitution_patterns
+    connection: "@supabase/supabase-js"
+    
+  azure_sql:
+    tables:
+      - campaign_metadata
+      - behavioral_logs
+    integration: "CES prompt injection via schema-mapper.ts"
+    
+  sample_data:
+    population_data: "29,060 customers"
+    transaction_volume: "15,642 transactions"
+    revenue_total: "₱3.84M"
+    categories: ["Beverages", "Snacks", "Personal Care", "Household", "Dairy"]
+    sku_combinations: 45
+    substitution_flows: 12
+
+# 🎨 Design System
+design_system:
+  brand: "Scout Analytics"
+  owner: "TBWA AI Analytics Platform"
+  color_palette:
+    primary: "#3B82F6"    # Blue-500
+    secondary: "#6B7280"  # Gray-500
+    success: "#10B981"    # Green-500
+    warning: "#F59E0B"    # Yellow-500
+    error: "#EF4444"      # Red-500
+    ai_purple: "#8B5CF6"  # Purple-500
+  
+  typography:
+    font_family: "Inter, system-ui, sans-serif"
+    headings:
+      h1: "text-3xl font-bold"
+      h2: "text-xl font-bold"
+      h3: "text-lg font-semibold"
+  
+  components:
+    cards: "rounded-lg shadow-sm border"
+    buttons: "px-4 py-2 rounded-lg transition-colors"
+    navigation: "tab-style with active state highlighting"
+
+# 🚀 Preview Deployment Configuration
+deployment:
+  platform: vercel
+  domain: scout-mvp-git-preview-ai-analytics-platform.vercel.app
+  environment: preview
+  branch: preview/v3.1
+  build_status: pending
+  
+  preview_features:
+    - enhanced_sku_charts
+    - substitution_analysis
+    - network_visualization
+    - improved_product_insights
+  
+  environment_variables:
+    NEXT_PUBLIC_SITE_URL: "https://scout-mvp-git-preview-ai-analytics-platform.vercel.app"
+    NEXT_PUBLIC_PLATFORM_NAME: "AI Analytics Platform"
+    NEXT_PUBLIC_VERSION: "3.1.0-preview"
+    NEXT_PUBLIC_ENVIRONMENT: "preview"
+
+# 🧱 Component Registry (Enhanced)
+component_files:
+  navigation:
+    - src/components/Navigation.tsx
+  
+  layout:
+    - src/components/layout/CollapsibleSection.tsx
+    - src/components/Header.jsx
+    - src/components/DateRangePicker.jsx
+  
+  charts:
+    - src/components/charts/PopulationPyramid.tsx
+    - src/components/charts/CustomerSegmentsTreeMap.tsx
+    - src/components/charts/BasketShareTreemap.tsx
+    - src/components/charts/PaymentGauges.tsx
+    - src/components/charts/DailyTransactionChart.tsx
+    - src/components/charts/RevenueDistributionChart.tsx
+    - src/components/charts/ShoppingTimeHeatmap.tsx
+    - src/components/charts/SKUCombinationNetwork.tsx  # NEW v3.1
+    - src/components/charts/SubstitutionSankeyChart.tsx  # NEW v3.1
+  
+  ai_components:
+    - src/components/AIAssistantPanel.tsx
+  
+  pages:
+    - pages/index.tsx
+    - pages/trends.tsx
+    - pages/products.tsx  # Enhanced with new charts
+    - pages/ai-assist.tsx
+
+# 🔄 Deployment Pattern
+deployment_workflow:
+  step_1_preview:
+    command: "vercel --prebuilt --confirm --token $VERCEL_TOKEN"
+    target: "https://scout-mvp-git-preview-ai-analytics-platform.vercel.app"
+    yaml_config: "scout_dashboard_preview.yaml"
+    
+  step_2_qa_approval:
+    validation_script: ":qa:scout check-components --env=preview"
+    stakeholder_review: true
+    regression_testing: true
+    
+  step_3_promote:
+    command: |
+      cp ui/layouts/scout_dashboard_preview.yaml ui/layouts/scout_dashboard_end_state.yaml
+      git add .
+      git commit -m "🚀 Promote Scout Dashboard v3.1 from preview to prod"
+      git push origin main
+      vercel --prod
+    
+  step_4_version_lock:
+    command: "cp ui/layouts/scout_dashboard_end_state.yaml ui/layouts/scout_dashboard_v3.1.0.yaml"
+
+# 📈 New Features in v3.1-preview
+new_features:
+  sku_combination_network:
+    description: "Interactive network graph showing product relationships"
+    features:
+      - node_clustering
+      - relationship_strength_visualization  
+      - cross_sell_suggestions
+      - hover_tooltips
+      - click_interactions
+    
+  substitution_sankey_chart:
+    description: "Visual flow of product substitutions and customer switching"
+    features:
+      - flow_thickness_based_on_volume
+      - interactive_paths
+      - substitution_rates
+      - retention_insights
+      - switching_risk_analysis
+
+# 🔍 Preview Acceptance Criteria
+preview_acceptance_criteria:
+  interactive_charts: pending # New SKU network and Sankey charts functional
+  product_insights: pending # Enhanced product analysis working
+  cross_sell_recommendations: pending # Network-based suggestions active  
+  substitution_analysis: pending # Sankey chart showing switching patterns
+  responsive_layout: pending # Mobile-first design confirmed
+  live_preview_deployment: pending # Preview URL accessible
+  yaml_config_parity: pending # Structure matches actual implementation
+
+# 📊 Preview Performance Targets
+performance_targets:
+  page_load_size: "< 2.5MB"  # Slightly higher due to new charts
+  response_time: "< 3 seconds"
+  build_size: "< 100 kB first load JS"
+  chart_render_time: "< 1 second"
+  mobile_responsive: true
+  accessibility: "WCAG AA compliant"
+
+# ✅ Preview Verification Steps
+verification_steps:
+  - step: "Deploy to preview environment"
+    command: "vercel --prebuilt --confirm"
+    
+  - step: "Verify SKU combination network interactivity"
+    test: "Click nodes, verify connections highlighting"
+    
+  - step: "Test substitution Sankey chart flows"
+    test: "Hover and click flows, verify flow details"
+    
+  - step: "Validate product insights accuracy"
+    test: "Cross-check chart data with sample datasets"
+    
+  - step: "Run comprehensive QA validation"
+    command: "node scripts/qa-scout-v3.cjs --env=preview"
+    
+  - step: "Stakeholder review and approval"
+    duration: "24-48 hours"
+    
+final_status: "🚧 Preview Ready v3.1.0 - Enhanced Product Analytics"
+next_milestone: "Stakeholder approval → Promote to production"

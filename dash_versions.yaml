@@ -1,0 +1,19 @@
+# Dashboard Version Registry
+# Tracks all production and previous dashboard YAML versions for rollback and audit
+
+versions:
+  - version: 3.0.0
+    file: ui/layouts/scout_dashboard_end_state.yaml
+    promoted_at: '2025-06-16'
+    status: active
+    url: https://ai-agency-sage.vercel.app/scout
+    notes: |
+      CES-aligned, full AI agent integration, Ask Scout API, rollback enabled.
+  # Add previous versions below for rollback
+  # - version: 2.9.2
+  #   file: ui/layouts/scout_dashboard_end_state_v2.9.2.yaml
+  #   promoted_at: '2025-05-10'
+  #   status: archived
+  #   url: https://ai-agency-sage.vercel.app/scout
+  #   notes: |
+  #     Last stable before v3.0.0 major upgrade.

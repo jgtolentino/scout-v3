@@ -1,0 +1,61 @@
+{
+  "url": "http://localhost:5173",
+  "timestamp": "2025-06-14T14:40:54.497Z",
+  "userAgent": "Scout-Analytics-Agent/1.0 (Deployment Audit Bot)",
+  "viewport": {
+    "width": 1366,
+    "height": 768
+  },
+  "errors": [
+    {
+      "type": "console_error",
+      "message": "Failed to load resource: the server responded with a status of 400 ()",
+      "timestamp": "2025-06-14T14:40:48.143Z"
+    },
+    {
+      "type": "console_error",
+      "message": "Failed to load resource: the server responded with a status of 400 ()",
+      "timestamp": "2025-06-14T14:40:48.307Z"
+    },
+    {
+      "type": "dashboard_issue",
+      "message": "Dashboard contains error messages visible to users",
+      "timestamp": "2025-06-14T14:40:54.411Z"
+    },
+    {
+      "type": "dashboard_issue",
+      "message": "No KPI cards or metrics found - dashboard may not be rendering properly",
+      "timestamp": "2025-06-14T14:40:54.411Z"
+    },
+    {
+      "type": "dashboard_issue",
+      "message": "Dashboard appears to show zero/empty data - may indicate data loading issues",
+      "timestamp": "2025-06-14T14:40:54.411Z"
+    }
+  ],
+  "networkFailures": [],
+  "dashboardTests": {
+    "hasMainContent": true,
+    "hasKPICards": false,
+    "hasCharts": true,
+    "hasNavigation": true,
+    "hasDataLoading": false,
+    "hasErrorMessages": true,
+    "totalElements": 103,
+    "hasScoutBranding": true,
+    "hasNonZeroData": false
+  },
+  "performanceMetrics": {
+    "pageLoadTime": 1996,
+    "domContentLoaded": 0,
+    "loadComplete": 0,
+    "firstPaint": 492,
+    "firstContentfulPaint": 492
+  },
+  "summary": {
+    "totalErrors": 5,
+    "totalNetworkFailures": 0,
+    "dashboardHealthy": false,
+    "pageLoadTime": 1996
+  }
+}

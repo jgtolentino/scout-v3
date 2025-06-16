@@ -1,0 +1,265 @@
+# 📊 Scout Analytics - Final Dashboard End State (with Component Specs)
+# ✅ Yummy + RetailBot | 🧱 Modular + Declarative
+
+dashboard:
+  id: scout-analytics-v1
+  version: 1.2.9
+  mode: production
+  title: Retail Intelligence – Scout Analytics
+  subtitle: FMCG Market Intelligence Dashboard
+  theme: tbwa-retail
+  data_sources:
+    - supabase
+    - yummy-agent
+    - retailbot
+
+layout:
+  navigation: side
+  header: sticky
+  filters:
+    orientation: horizontal
+    type: responsive
+    drawer_enabled: true
+    fields:
+      - name: brand
+        label: 🏷️ Brand
+        type: multi-select
+        source: distinct_brands
+      - name: category
+        label: 🧂 Category
+        type: multi-select
+        source: distinct_categories
+      - name: region
+        label: 🗺️ Region
+        type: multi-select
+        source: distinct_regions
+      - name: date
+        label: 📅 Date Range
+        type: date-range
+        source: transactions
+
+pages:
+  - id: overview
+    title: Overview
+    icon: 📊
+    components:
+      - id: kpi_row
+        type: metrics
+        props:
+          metrics: [revenue, aov, units_sold]
+      - id: trend_chart
+        type: line_chart
+        props:
+          granularity: daily
+          series: revenue_by_date
+      - id: region_heatmap
+        type: geo_heatmap
+        props:
+          region_source: sales_regions
+          metric: revenue
+      - id: ai_insights_panel
+        type: llm_summary
+        props:
+          source: ai/overview_summary.md
+
+  - id: trends
+    title: Temporal Trends
+    icon: 📈
+    components:
+      - id: hourly_chart
+        type: bar_chart
+        props:
+          x: hour
+          y: transaction_volume
+      - id: daily_chart
+        type: line_chart
+        props:
+          x: day
+          y: revenue
+      - id: weekly_chart
+        type: stacked_area_chart
+        props:
+          group_by: category
+          y: revenue
+      - id: store_breakdown_chart
+        type: small_multiples
+        props:
+          split_by: store
+          metric: avg_basket_size
+
+  - id: products
+    title: Product Mix
+    icon: 🧺
+    components:
+      - id: brand_bar_chart
+        type: horizontal_bar
+        props:
+          dimension: brand
+          metric: revenue
+      - id: category_donut_chart
+        type: donut_chart
+        props:
+          dimension: category
+          metric: units_sold
+      - id: sku_table
+        type: data_table
+        props:
+          columns: [sku_name, brand, units_sold, revenue, avg_price]
+      - id: substitution_flow
+        type: sankey_chart
+        props:
+          source: substituted_sku
+          target: purchased_sku
+          value: substitution_count
+
+  - id: consumers
+    title: Consumer Insights
+    icon: 🧍‍♀️🧍‍♂️
+    components:
+      - id: demographics_panel
+        type: demographic_tiles
+        props:
+          breakdowns: [age, gender]
+      - id: income_distribution
+        type: histogram
+        props:
+          bucket: income_range
+          value: customer_count
+      - id: loyalty_heatmap
+        type: heatmap
+        props:
+          x: month
+          y: customer_id
+          metric: repeat_rate
+
+  - id: promotions
+    title: Promotion Analysis
+    icon: 💸
+    components:
+      - id: promo_uplift_chart
+        type: waterfall_chart
+        props:
+          stages: [baseline, promo, post_promo]
+          metric: revenue
+      - id: timing_effectiveness
+        type: scatter_plot
+        props:
+          x: start_day_of_week
+          y: uplift_percentage
+      - id: discount_depth_curve
+        type: curve_chart
+        props:
+          x: discount_pct
+          y: sales_volume
+      - id: ai_promo_insights
+        type: llm_summary
+        props:
+          source: ai/promo_effectiveness.md
+
+  - id: competitors
+    title: Competitor Intelligence
+    icon: ⚔️
+    components:
+      - id: market_share_table
+        type: ranked_table
+        props:
+          dimension: brand
+          metric: revenue
+          sort_by: market_share
+      - id: price_positioning_chart
+        type: scatter_plot
+        props:
+          x: avg_price
+          y: units_sold
+      - id: threat_level_indicator
+        type: signal_gauge
+        props:
+          threshold: high_risk_competitor_alerts
+      - id: ai_competitor_warnings
+        type: llm_alerts
+        props:
+          source: ai/competitor_threats.md
+
+  - id: inventory
+    title: Inventory Watch
+    icon: 🏬
+    components:
+      - id: stock_level_table
+        type: table
+        props:
+          columns: [sku, current_stock, threshold, days_cover]
+      - id: replenishment_alerts
+        type: alerts_panel
+        props:
+          alert_type: low_stock
+      - id: regional_stock_heatmap
+        type: geo_heatmap
+        props:
+          region_source: warehouse_locations
+          metric: stock_availability
+      - id: ai_inventory_forecaster
+        type: llm_predictive
+        props:
+          model: yummy
+          scope: inventory
+
+  - id: scoutbot
+    title: Scout AI Chat
+    icon: 🤖
+    components:
+      - id: persistent_chat_widget
+        type: chat_box
+        props:
+          mode: docked
+      - id: openai_streaming
+        type: streaming_output
+        props:
+          backend: openai
+      - id: context_aware_queries
+        type: smart_prompt
+        props:
+          enrich: true
+      - id: voice_mode_toggle
+        type: toggle_button
+        props:
+          states: [text, voice]
+
+# Global Chat Widget Configuration
+global_widgets:
+  - id: persistent_retailbot
+    type: floating_chat
+    component: PersistentChatWidget
+    props:
+      position: bottom-right
+      theme: tbwa
+      modes: [minimized, expanded, fullscreen]
+      ai_backend: enhanced_retailbot
+      context_aware: true
+      filter_integration: true
+    visibility:
+      pages: all
+      exclude: [chat]  # Hide on dedicated chat page
+    features:
+      - scroll_behavior: auto_hide
+      - quick_actions: enabled
+      - notification_badge: true
+      - voice_input: false
+      - file_upload: false
+      - export_chat: true
+
+footer:
+  diagnostics: true
+  export_controls: true
+  data_toggle: real_sim
+
+meta:
+  last_updated: 2025-06-15T01:15:00+08:00
+  deployed_by: jgtolentino
+  agent_integration: yummy + retailbot
+  branding: tbwa
+  license: enterprise
+  implementation_status:
+    core_platform: completed
+    tbwa_branding: completed
+    persistent_chat: in_progress
+    advanced_charts: pending

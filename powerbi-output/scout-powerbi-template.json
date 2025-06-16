@@ -1,0 +1,506 @@
+{
+  "version": "1.0",
+  "config": {
+    "dataModel": {
+      "name": "ScoutAnalyticsModel",
+      "connections": [
+        {
+          "name": "AzureSQLConnection",
+          "connectionString": "Data Source=sqltbwaprojectscoutserver.database.windows.net;Initial Catalog=SQL-TBWA-ProjectScout-Reporting-Prod;Integrated Security=False;Encrypt=True;TrustServerCertificate=False",
+          "provider": "System.Data.SqlClient",
+          "type": "sql"
+        }
+      ],
+      "tables": [
+        {
+          "name": "transactions",
+          "source": "SELECT * FROM transactions",
+          "columns": [
+            {
+              "name": "transaction_id",
+              "type": "Int64"
+            },
+            {
+              "name": "transaction_datetime",
+              "type": "DateTime"
+            },
+            {
+              "name": "store_id",
+              "type": "Int64"
+            },
+            {
+              "name": "customer_id",
+              "type": "Int64"
+            },
+            {
+              "name": "total_amount",
+              "type": "Currency"
+            },
+            {
+              "name": "created_at",
+              "type": "DateTime"
+            }
+          ]
+        },
+        {
+          "name": "transaction_items",
+          "source": "SELECT * FROM transaction_items",
+          "columns": [
+            {
+              "name": "item_id",
+              "type": "Int64"
+            },
+            {
+              "name": "transaction_id",
+              "type": "Int64"
+            },
+            {
+              "name": "product_id",
+              "type": "Int64"
+            },
+            {
+              "name": "quantity",
+              "type": "Int64"
+            },
+            {
+              "name": "unit_price",
+              "type": "Currency"
+            },
+            {
+              "name": "brand_requested",
+              "type": "Text"
+            },
+            {
+              "name": "brand_fulfilled",
+              "type": "Text"
+            }
+          ]
+        },
+        {
+          "name": "products",
+          "source": "SELECT * FROM products",
+          "columns": [
+            {
+              "name": "product_id",
+              "type": "Int64"
+            },
+            {
+              "name": "name",
+              "type": "Text"
+            },
+            {
+              "name": "category",
+              "type": "Text"
+            },
+            {
+              "name": "brand_id",
+              "type": "Int64"
+            },
+            {
+              "name": "price",
+              "type": "Currency"
+            }
+          ]
+        },
+        {
+          "name": "stores",
+          "source": "SELECT * FROM stores",
+          "columns": [
+            {
+              "name": "store_id",
+              "type": "Int64"
+            },
+            {
+              "name": "name",
+              "type": "Text"
+            },
+            {
+              "name": "barangay",
+              "type": "Text"
+            },
+            {
+              "name": "city",
+              "type": "Text"
+            },
+            {
+              "name": "region",
+              "type": "Text"
+            },
+            {
+              "name": "latitude",
+              "type": "Decimal"
+            },
+            {
+              "name": "longitude",
+              "type": "Decimal"
+            }
+          ]
+        },
+        {
+          "name": "customers",
+          "source": "SELECT * FROM customers",
+          "columns": [
+            {
+              "name": "customer_id",
+              "type": "Int64"
+            },
+            {
+              "name": "age",
+              "type": "Int64"
+            },
+            {
+              "name": "gender",
+              "type": "Text"
+            },
+            {
+              "name": "income_bracket",
+              "type": "Text"
+            }
+          ]
+        },
+        {
+          "name": "brands",
+          "source": "SELECT * FROM brands",
+          "columns": [
+            {
+              "name": "brand_id",
+              "type": "Int64"
+            },
+            {
+              "name": "name",
+              "type": "Text"
+            },
+            {
+              "name": "company",
+              "type": "Text"
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "from": "transaction_items[transaction_id]",
+          "to": "transactions[transaction_id]",
+          "type": "many-to-one"
+        },
+        {
+          "from": "transaction_items[product_id]",
+          "to": "products[product_id]",
+          "type": "many-to-one"
+        },
+        {
+          "from": "transactions[store_id]",
+          "to": "stores[store_id]",
+          "type": "many-to-one"
+        },
+        {
+          "from": "transactions[customer_id]",
+          "to": "customers[customer_id]",
+          "type": "many-to-one"
+        },
+        {
+          "from": "products[brand_id]",
+          "to": "brands[brand_id]",
+          "type": "many-to-one"
+        }
+      ],
+      "measures": [
+        {
+          "name": "TransactionCount",
+          "expression": "COUNTROWS(transactions)",
+          "table": "transactions"
+        },
+        {
+          "name": "TotalRevenue",
+          "expression": "SUM(transactions[total_amount])",
+          "table": "transactions"
+        },
+        {
+          "name": "UnitsPerTransaction",
+          "expression": "DIVIDE(SUM(transaction_items[quantity]), COUNTROWS(transactions))",
+          "table": "transaction_items"
+        },
+        {
+          "name": "AverageTransactionValue",
+          "expression": "AVERAGE(transactions[total_amount])",
+          "table": "transactions"
+        },
+        {
+          "name": "SubstitutionRate",
+          "expression": "DIVIDE(COUNTROWS(FILTER(transaction_items, transaction_items[brand_requested] <> transaction_items[brand_fulfilled])), COUNTROWS(transaction_items))",
+          "table": "transaction_items"
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "Overview Dashboard",
+        "visuals": [
+          {
+            "type": "card",
+            "title": "Total Transactions",
+            "measure": "TransactionCount",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "width": 200,
+              "height": 100
+            },
+            "formatting": {
+              "fontSize": 24,
+              "fontColor": "#2C3E50",
+              "backgroundColor": "#ECF0F1"
+            }
+          },
+          {
+            "type": "card",
+            "title": "Total Revenue",
+            "measure": "TotalRevenue",
+            "position": {
+              "x": 220,
+              "y": 0,
+              "width": 200,
+              "height": 100
+            },
+            "formatting": {
+              "fontSize": 24,
+              "fontColor": "#27AE60",
+              "backgroundColor": "#ECF0F1",
+              "displayUnits": "thousands"
+            }
+          },
+          {
+            "type": "lineChart",
+            "title": "Transaction Trends",
+            "xAxis": "transactions[transaction_datetime]",
+            "yAxis": "TransactionCount",
+            "position": {
+              "x": 0,
+              "y": 120,
+              "width": 600,
+              "height": 300
+            },
+            "formatting": {
+              "xAxisTitle": "Date",
+              "yAxisTitle": "Transaction Count",
+              "lineColor": "#3498DB"
+            }
+          },
+          {
+            "type": "histogram",
+            "title": "Peso Value Distribution",
+            "field": "transactions[total_amount]",
+            "position": {
+              "x": 620,
+              "y": 120,
+              "width": 400,
+              "height": 300
+            },
+            "formatting": {
+              "bins": 20,
+              "barColor": "#E74C3C"
+            }
+          },
+          {
+            "type": "matrix",
+            "title": "Volume by Time & Location",
+            "rows": "stores[region]",
+            "columns": "HOUR(transactions[transaction_datetime])",
+            "values": "TransactionCount",
+            "position": {
+              "x": 0,
+              "y": 440,
+              "width": 500,
+              "height": 250
+            },
+            "formatting": {
+              "colorScale": [
+                "#FFF",
+                "#3498DB"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Product Analytics",
+        "visuals": [
+          {
+            "type": "stackedColumnChart",
+            "title": "Category & Brand Breakdown",
+            "xAxis": "products[category]",
+            "yAxis": "TransactionCount",
+            "legend": "brands[name]",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "width": 600,
+              "height": 300
+            },
+            "formatting": {
+              "xAxisTitle": "Category",
+              "yAxisTitle": "Transaction Count"
+            }
+          },
+          {
+            "type": "columnChart",
+            "title": "Top 10 SKUs per Category",
+            "xAxis": "products[name]",
+            "yAxis": "TransactionCount",
+            "filters": {
+              "topN": {
+                "field": "TransactionCount",
+                "count": 10
+              }
+            },
+            "position": {
+              "x": 620,
+              "y": 0,
+              "width": 400,
+              "height": 300
+            },
+            "formatting": {
+              "barColor": "#9B59B6"
+            }
+          },
+          {
+            "type": "sankeyDiagram",
+            "title": "Substitution Patterns",
+            "source": "transaction_items[brand_requested]",
+            "target": "transaction_items[brand_fulfilled]",
+            "value": "COUNTROWS(transaction_items)",
+            "position": {
+              "x": 0,
+              "y": 320,
+              "width": 1020,
+              "height": 300
+            },
+            "formatting": {
+              "linkColor": "#34495E",
+              "nodeColor": "#2ECC71"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Consumer Insights",
+        "visuals": [
+          {
+            "type": "funnelChart",
+            "title": "Consumer Behavior Funnel",
+            "category": "BehaviorStage",
+            "values": "Count",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "width": 400,
+              "height": 400
+            },
+            "data": [
+              {
+                "stage": "Brand Mentioned",
+                "count": 5000
+              },
+              {
+                "stage": "Storeowner Suggestion",
+                "count": 3500
+              },
+              {
+                "stage": "Purchase",
+                "count": 2800
+              }
+            ]
+          },
+          {
+            "type": "donutChart",
+            "title": "Consumer Profiling by Gender",
+            "category": "customers[gender]",
+            "values": "COUNTROWS(customers)",
+            "position": {
+              "x": 420,
+              "y": 0,
+              "width": 300,
+              "height": 400
+            },
+            "formatting": {
+              "colors": [
+                "#E91E63",
+                "#2196F3",
+                "#FF9800"
+              ]
+            }
+          },
+          {
+            "type": "treemap",
+            "title": "Age Distribution",
+            "category": "AgeGroup",
+            "values": "COUNTROWS(customers)",
+            "position": {
+              "x": 740,
+              "y": 0,
+              "width": 280,
+              "height": 400
+            },
+            "formatting": {
+              "colorScale": [
+                "#FFF59D",
+                "#FF8A65"
+              ]
+            }
+          },
+          {
+            "type": "map",
+            "title": "Store Location Mapping",
+            "latitude": "stores[latitude]",
+            "longitude": "stores[longitude]",
+            "size": "TransactionCount",
+            "position": {
+              "x": 0,
+              "y": 420,
+              "width": 500,
+              "height": 300
+            },
+            "formatting": {
+              "mapStyle": "road",
+              "bubbleColor": "#FF5722"
+            }
+          },
+          {
+            "type": "textbox",
+            "title": "AI Recommendations Panel",
+            "content": "AI-powered insights will be displayed here based on real-time analysis",
+            "position": {
+              "x": 520,
+              "y": 420,
+              "width": 500,
+              "height": 300
+            },
+            "formatting": {
+              "fontSize": 14,
+              "fontColor": "#2C3E50",
+              "backgroundColor": "#F8F9FA",
+              "border": "1px solid #DEE2E6"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "generatedBy": "Scout MVP Power BI Generator",
+    "generatedAt": "2025-06-13T05:15:52.750Z",
+    "version": "1.0.0",
+    "dataSource": "sqltbwaprojectscoutserver.database.windows.net",
+    "reportName": "Scout Dashboard"
+  },
+  "daxMeasures": {
+    "HourOfDay": "HOUR(transactions[transaction_datetime])",
+    "DayOfWeek": "WEEKDAY(transactions[transaction_datetime])",
+    "MonthName": "FORMAT(transactions[transaction_datetime], \"MMMM\")",
+    "AgeGroup": "\n    SWITCH(\n      TRUE(),\n      customers[age] < 25, \"18-24\",\n      customers[age] < 35, \"25-34\", \n      customers[age] < 45, \"35-44\",\n      customers[age] < 55, \"45-54\",\n      \"55+\"\n    )\n  ",
+    "TransactionValueBracket": "\n    SWITCH(\n      TRUE(),\n      transactions[total_amount] < 100, \"₱0-99\",\n      transactions[total_amount] < 500, \"₱100-499\",\n      transactions[total_amount] < 1000, \"₱500-999\",\n      \"₱1000+\"\n    )\n  ",
+    "RevenueGrowthMoM": "\n    VAR CurrentMonth = SUM(transactions[total_amount])\n    VAR PreviousMonth = CALCULATE(\n      SUM(transactions[total_amount]),\n      DATEADD(transactions[transaction_datetime], -1, MONTH)\n    )\n    RETURN DIVIDE(CurrentMonth - PreviousMonth, PreviousMonth)\n  ",
+    "SubstitutionCount": "COUNTROWS(FILTER(transaction_items, transaction_items[brand_requested] <> transaction_items[brand_fulfilled]))",
+    "BrandLoyaltyRate": "\n    DIVIDE(\n      COUNTROWS(FILTER(transaction_items, transaction_items[brand_requested] = transaction_items[brand_fulfilled])),\n      COUNTROWS(transaction_items)\n    )\n  "
+  }
+}

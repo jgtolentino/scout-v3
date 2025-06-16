@@ -1,0 +1,378 @@
+# ===========================================================
+# 🏪 Yummy FMCG Intelligence Agent - Enhanced Visual Profile
+# Pulser-native rendering with TBWA brand integration
+# ===========================================================
+
+agent:
+  id: yummy-fmcg-intelligence
+  name: Yummy
+  version: 2.1.0
+  type: specialized_intelligence
+  category: fmcg_retail_analytics
+  
+  # Visual Identity & Branding
+  visual:
+    primary_icon: 🏪
+    secondary_icons:
+      inventory: 📦
+      promotions: 💸
+      competitors: ⚔️
+      insights: 🧠
+    color_scheme:
+      primary: "#FF6B35"        # Yummy Orange
+      secondary: "#003865"      # TBWA Navy  
+      accent: "#FFC72C"         # TBWA Yellow
+      success: "#10B981"        # Green for positive metrics
+      warning: "#F59E0B"        # Amber for alerts
+      danger: "#EF4444"         # Red for critical issues
+    avatar:
+      style: modern_retail
+      background: linear-gradient(135deg, #FF6B35 0%, #FFC72C 100%)
+      icon_color: white
+      border_radius: "50%"
+      size: { small: "32px", medium: "48px", large: "64px" }
+
+  # Core Capabilities & Specializations
+  specialization:
+    domain: fmcg_retail_intelligence
+    expertise_areas:
+      - inventory_optimization
+      - promotion_effectiveness
+      - competitive_analysis
+      - category_management
+      - supply_chain_intelligence
+      - price_optimization
+    
+    intelligence_types:
+      - real_time_monitoring
+      - predictive_analytics
+      - comparative_analysis
+      - trend_detection
+      - alert_generation
+      - strategic_recommendations
+
+# ===========================================================
+# PULSER-NATIVE RENDERING CONFIGURATION
+# ===========================================================
+
+rendering:
+  framework: pulser_native
+  layout_engine: tbwa_retail_grid
+  responsive: true
+  theme_integration: true
+  
+  # Dashboard Layout Configuration
+  dashboard:
+    layout_type: adaptive_grid
+    columns: { mobile: 1, tablet: 2, desktop: 3, wide: 4 }
+    spacing: "1.5rem"
+    max_width: "1400px"
+    
+    # Panel Configurations
+    panels:
+      inventory_intelligence:
+        title: "📦 Inventory Intelligence"
+        priority: 1
+        size: { cols: 2, rows: 2 }
+        refresh_interval: 30_seconds
+        visual_style:
+          background: "gradient(to-br, from-orange-50, to-orange-100)"
+          border: "1px solid rgba(255, 107, 53, 0.2)"
+          shadow: "0 4px 12px rgba(255, 107, 53, 0.1)"
+        components:
+          - stock_level_alerts
+          - reorder_recommendations
+          - regional_inventory_heatmap
+          - critical_stock_indicators
+          
+      promotion_analytics:
+        title: "💸 Promotion Analytics" 
+        priority: 2
+        size: { cols: 2, rows: 2 }
+        refresh_interval: 60_seconds
+        visual_style:
+          background: "gradient(to-br, from-yellow-50, to-yellow-100)"
+          border: "1px solid rgba(255, 199, 44, 0.3)"
+          shadow: "0 4px 12px rgba(255, 199, 44, 0.15)"
+        components:
+          - roi_analysis_chart
+          - campaign_effectiveness_metrics
+          - timing_optimization_insights
+          - promotional_lift_trends
+          
+      competitive_intelligence:
+        title: "⚔️ Competitive Intelligence"
+        priority: 3  
+        size: { cols: 2, rows: 2 }
+        refresh_interval: 300_seconds
+        visual_style:
+          background: "gradient(to-br, from-red-50, to-red-100)"
+          border: "1px solid rgba(239, 68, 68, 0.2)"
+          shadow: "0 4px 12px rgba(239, 68, 68, 0.1)"
+        components:
+          - market_share_tracker
+          - threat_level_matrix
+          - price_positioning_analysis
+          - competitive_gap_alerts
+          
+      strategic_insights:
+        title: "🧠 Strategic Insights"
+        priority: 4
+        size: { cols: 4, rows: 1 }
+        refresh_interval: 120_seconds
+        visual_style:
+          background: "gradient(to-r, from-blue-50, to-indigo-50)"
+          border: "1px solid rgba(59, 130, 246, 0.2)"
+          shadow: "0 4px 12px rgba(59, 130, 246, 0.1)"
+        components:
+          - ai_generated_insights
+          - actionable_recommendations
+          - trend_predictions
+          - business_impact_scores
+
+# ===========================================================
+# DATA INTEGRATION & API CONFIGURATION  
+# ===========================================================
+
+data_integration:
+  primary_sources:
+    - supabase_fmcg_dataset
+    - real_time_inventory_feeds
+    - promotional_calendar_data
+    - competitive_pricing_apis
+    
+  endpoints:
+    inventory_api:
+      path: "/api/yummy/inventory"
+      method: "GET"
+      cache_ttl: 30_seconds
+      params: ["sku", "region", "store_id"]
+      
+    promotions_api:
+      path: "/api/yummy/promotions"  
+      method: "GET"
+      cache_ttl: 60_seconds
+      params: ["campaign_id", "date_range", "category"]
+      
+    competitors_api:
+      path: "/api/yummy/competitors"
+      method: "GET" 
+      cache_ttl: 300_seconds
+      params: ["brand", "region", "category"]
+      
+    insights_api:
+      path: "/api/yummy/insights"
+      method: "POST"
+      cache_ttl: 120_seconds
+      body: ["query", "context", "filters"]
+
+# ===========================================================
+# INTELLIGENT ROUTING & CONTEXT AWARENESS
+# ===========================================================
+
+intelligent_routing:
+  query_classification:
+    inventory_keywords:
+      - "stock", "inventory", "out of stock", "reorder"
+      - "supply", "shortage", "availability", "replenish"
+    promotion_keywords:
+      - "promotion", "campaign", "discount", "sale", "offer"
+      - "roi", "effectiveness", "uplift", "performance"
+    competitive_keywords:
+      - "competitor", "competition", "market share", "threat"
+      - "pricing", "positioning", "benchmark", "rival"
+    insight_keywords:
+      - "insight", "recommendation", "strategy", "trend"
+      - "forecast", "predict", "opportunity", "analysis"
+      
+  context_enhancement:
+    filter_awareness: true
+    temporal_context: true
+    regional_context: true
+    category_context: true
+    
+  response_formatting:
+    use_emojis: true
+    include_metrics: true
+    provide_actions: true
+    highlight_urgency: true
+
+# ===========================================================
+# ALERT SYSTEM & NOTIFICATIONS
+# ===========================================================
+
+alert_system:
+  categories:
+    critical:
+      - out_of_stock_alert
+      - competitor_threat_high
+      - promotion_failure
+      icon: "🚨"
+      color: "#EF4444"
+      
+    warning:
+      - low_stock_warning
+      - promotion_underperforming
+      - market_share_decline
+      icon: "⚠️"
+      color: "#F59E0B"
+      
+    info:
+      - reorder_suggestion
+      - promotion_opportunity
+      - competitive_insight
+      icon: "ℹ️"
+      color: "#3B82F6"
+      
+    success:
+      - promotion_exceeding_target
+      - inventory_optimized
+      - market_share_growth
+      icon: "✅"
+      color: "#10B981"
+
+# ===========================================================
+# TBWA BRAND INTEGRATION
+# ===========================================================
+
+tbwa_integration:
+  brand_highlighting:
+    tbwa_brands: ["Oishi", "Del Monte", "Champion"]
+    visual_treatment:
+      background: "rgba(255, 199, 44, 0.1)"
+      border_left: "4px solid #FFC72C"
+      font_weight: "600"
+      icon: "⭐"
+      
+  competitive_context:
+    always_compare_to_tbwa: true
+    highlight_advantages: true
+    surface_opportunities: true
+    
+  strategic_focus:
+    portfolio_optimization: true
+    cross_brand_synergies: true
+    market_leadership_tracking: true
+
+# ===========================================================
+# PERFORMANCE OPTIMIZATION
+# ===========================================================
+
+performance:
+  caching:
+    strategy: "intelligent_tiered"
+    levels:
+      - memory: "hot_data_30s"
+      - redis: "warm_data_5min" 
+      - database: "cold_data_1hr"
+      
+  lazy_loading:
+    enabled: true
+    threshold: "viewport_intersection"
+    placeholder: "skeleton_animation"
+    
+  data_streaming:
+    enabled: true
+    chunk_size: "1MB"
+    compression: "gzip"
+
+# ===========================================================
+# ACCESSIBILITY & INTERNATIONALIZATION
+# ===========================================================
+
+accessibility:
+  screen_reader_support: true
+  keyboard_navigation: true
+  high_contrast_mode: true
+  focus_indicators: true
+  
+internationalization:
+  default_locale: "en-PH"
+  supported_locales: ["en-US", "fil-PH"]
+  currency_format: "PHP"
+  number_format: "en-PH"
+  date_format: "MM/dd/yyyy"
+
+# ===========================================================
+# DEPLOYMENT & MONITORING
+# ===========================================================
+
+deployment:
+  environment: "production"
+  version_strategy: "rolling_update"
+  health_checks:
+    - endpoint: "/api/yummy/health"
+    - interval: "30s"
+    - timeout: "5s"
+    
+monitoring:
+  metrics:
+    - query_response_time
+    - api_success_rate  
+    - alert_generation_rate
+    - user_engagement_score
+    
+  logging:
+    level: "info"
+    format: "structured_json"
+    retention: "30_days"
+
+# ===========================================================
+# INTEGRATION ENDPOINTS
+# ===========================================================
+
+integrations:
+  scout_analytics:
+    shared_context: true
+    data_synchronization: true
+    unified_filtering: true
+    
+  retailbot:
+    conversation_handoff: true
+    context_preservation: true
+    expertise_routing: true
+    
+  learnbot:
+    tutorial_integration: true
+    progressive_disclosure: true
+    guided_learning: true
+
+# ===========================================================
+# SUCCESS METRICS & KPIs
+# ===========================================================
+
+success_metrics:
+  business_impact:
+    - inventory_optimization_score
+    - promotion_roi_improvement
+    - competitive_advantage_index
+    - strategic_insight_accuracy
+    
+  user_experience:
+    - query_resolution_rate
+    - user_satisfaction_score
+    - feature_adoption_rate
+    - learning_curve_reduction
+    
+  technical_performance:
+    - response_time_p95
+    - uptime_percentage
+    - error_rate
+    - cache_hit_ratio
+
+# ===========================================================
+# FUTURE ENHANCEMENTS
+# ===========================================================
+
+roadmap:
+  phase_2_features:
+    - predictive_inventory_modeling
+    - automated_promotion_optimization
+    - competitive_pricing_recommendations
+    - supply_chain_risk_assessment
+    
+  phase_3_features:
+    - machine_learning_insights
+    - natural_language_querying
+    - voice_interface_integration
+    - advanced_visualization_engine

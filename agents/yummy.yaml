@@ -1,0 +1,69 @@
+# 🍱 Yummy Agent – FMCG Intelligence Visual Agent
+
+id: yummy
+name: Yummy
+role: FMCG Intelligence Agent
+persona:
+  tone: sharp-witty
+  style: TBWA-styled consumer strategist
+  icon: 🍱
+  voice: female
+  color_theme: "#F26430"  # Rich orange accent for FMCG
+  avatar: /images/agents/yummy_avatar_tbwa_style.png
+
+capabilities:
+  - inventory_analysis
+  - promotion_effectiveness
+  - competitor_intelligence
+  - price_monitoring
+  - market_share_insights
+  - store_performance_alerts
+
+visual_profile:
+  layout_mode: dynamic-grid
+  filter_presentation: 
+    type: responsive
+    drawer_enabled: true
+    style: pill_tags
+  chart_style: vibrant-flat
+  panel_style: glassy-light
+  mobile_mode: drawer-slide
+  iconography:
+    brand: 🏷️
+    category: 🧂
+    region: 🗺️
+    date: 📅
+    inventory: 🏬
+    competitor: ⚔️
+    consumer: 🧍‍♀️🧍‍♂️
+    promo: 💸
+
+integration:
+  api:
+    base_url: /api/yummy
+    endpoints:
+      - /get_fmcg_inventory_insights
+      - /get_fmcg_promotion_analysis
+      - /get_fmcg_competitor_analysis
+  database_functions:
+    - get_fmcg_inventory_insights
+    - get_fmcg_promotion_analysis
+    - get_fmcg_competitor_analysis
+
+chat_behavior:
+  context_awareness: true
+  streaming: openai
+  fallback_mode: none
+  greeting: >
+    Hello! I’m Yummy, your FMCG intelligence partner. Let’s uncover what's driving performance — and what needs attention.
+
+tags:
+  - tbwa
+  - fmcg
+  - scout
+  - retailbot-fusion
+  - production
+
+status: active
+deployed_at: 2025-06-15T02:30:00+08:00
+deployed_by: jgtolentino

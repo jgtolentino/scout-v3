@@ -1,0 +1,31 @@
+# 🔧 Pulser Patch: Responsive Filter Layout System – v1.0
+layout_filters:
+  style: responsive
+  layout:
+    desktop: horizontal_bar
+    mobile: drawer_slide
+  components:
+    - type: date_range
+      label: "📅 Date Range"
+      behavior:
+        preset_buttons: ["Last 7d", "Last 30d", "YTD"]
+        min_date: "2024-01-01"
+    - type: multi_select
+      label: "📍 Region"
+      id: region
+    - type: multi_select
+      label: "🏪 Store"
+      id: store
+      depends_on: region
+    - type: multi_select
+      label: "🏷 Brand"
+      id: brand
+    - type: multi_select
+      label: "🧃 Category"
+      id: category
+  options:
+    show_applied_tags: true
+    reset_button: true
+    pinned: true
+    chip_style: rounded
+    breakpoint_collapse: md 

@@ -1,0 +1,181 @@
+{
+  "tour_id": "scout_analytics_walkthrough",
+  "title": "Scout Analytics Interactive Walkthrough",
+  "description": "Learn to navigate Philippine FMCG retail intelligence with LearnBot",
+  "theme": "tbwa",
+  "auto_start": false,
+  "show_progress": true,
+  "show_navigation": true,
+  "backdrop": true,
+  "spotlight_radius": 10,
+  "steps": [
+    {
+      "id": "welcome",
+      "title": "🎓 Welcome to Scout Analytics",
+      "content": "This interactive walkthrough will teach you to master Philippine FMCG retail intelligence. Click 'Next' to begin your journey!",
+      "target": "body",
+      "placement": "center",
+      "backdrop": true,
+      "voice_text": "Welcome to Scout Analytics! I'm LearnBot, your AI guide to Philippine retail intelligence."
+    },
+    {
+      "id": "filter_bar",
+      "title": "🎯 Global Filter System",
+      "content": "This is your command center. Use filters to focus on specific regions, time periods, brands, or categories. All dashboard data updates in real-time!",
+      "target": ".filter-bar",
+      "placement": "bottom",
+      "highlight_class": "ring-4 ring-tbwa-yellow",
+      "voice_text": "The filter bar is your command center. Use it to focus on specific data segments."
+    },
+    {
+      "id": "sidebar_navigation",
+      "title": "📊 Dashboard Navigation",
+      "content": "Navigate between 6 core sections: Overview for KPIs, Product Mix for category analysis, Consumer Insights for demographics, and more.",
+      "target": ".tbwa-sidebar",
+      "placement": "right",
+      "highlight_class": "ring-4 ring-tbwa-navy",
+      "voice_text": "Use the sidebar to navigate between different dashboard sections."
+    },
+    {
+      "id": "kpi_cards",
+      "title": "💰 Key Performance Indicators",
+      "content": "These KPI cards show your most important metrics. Hover over them to see period comparisons and trends. Green arrows mean growth!",
+      "target": ".tbwa-kpi-card:first-child",
+      "placement": "bottom",
+      "highlight_class": "ring-4 ring-green-400",
+      "voice_text": "KPI cards display your key metrics. Hover to see trends and comparisons."
+    },
+    {
+      "id": "revenue_chart",
+      "title": "📈 Revenue Trends",
+      "content": "This chart shows daily revenue patterns. Look for spikes during promotions or dips that need attention. Click data points for details!",
+      "target": ".chart-container:first-child",
+      "placement": "top",
+      "highlight_class": "ring-4 ring-blue-400",
+      "voice_text": "Revenue charts reveal daily patterns and trends in your business performance."
+    },
+    {
+      "id": "ai_insights",
+      "title": "🤖 AI-Powered Insights",
+      "content": "Scout AI automatically analyzes your data and provides actionable insights. These update based on your current filters and time range.",
+      "target": "[class*='insight']",
+      "placement": "left",
+      "highlight_class": "ring-4 ring-purple-400",
+      "voice_text": "AI insights provide automatic analysis and recommendations based on your data."
+    },
+    {
+      "id": "tbwa_branding",
+      "title": "🎨 TBWA Brand Intelligence",
+      "content": "Yellow accents highlight TBWA brands (Oishi, Del Monte, Champion) and key insights. Orange elements indicate premium or important features.",
+      "target": ".tbwa-brand-highlight, .text-tbwa-yellow",
+      "placement": "top",
+      "highlight_class": "ring-4 ring-tbwa-yellow",
+      "voice_text": "Yellow and orange accents highlight TBWA brands and premium features."
+    },
+    {
+      "id": "regional_analysis",
+      "title": "🌍 Philippine Regional Data",
+      "content": "All data covers 17 Philippine regions. Use region filters to compare NCR vs provinces, or analyze specific markets like CALABARZON.",
+      "target": "[data-region], .region-filter",
+      "placement": "bottom",
+      "highlight_class": "ring-4 ring-blue-400",
+      "voice_text": "Regional analysis covers all 17 Philippine regions for comprehensive market insights."
+    },
+    {
+      "id": "category_performance",
+      "title": "📦 Product Categories",
+      "content": "Navigate to Product Mix to see category breakdowns: Beverages 🧃, Snacks 🍿, Dairy 🥛, Personal Care 🧴, and more with emoji indicators.",
+      "target": ".category-filter, [class*='category']",
+      "placement": "bottom",
+      "highlight_class": "ring-4 ring-green-400",
+      "voice_text": "Product categories are organized with intuitive emoji indicators for easy navigation."
+    },
+    {
+      "id": "consumer_demographics",
+      "title": "👥 Customer Intelligence",
+      "content": "Consumer Insights reveals age groups, gender distribution, income brackets, and payment preferences across different regions.",
+      "target": "[class*='demographic'], [class*='consumer']",
+      "placement": "top",
+      "highlight_class": "ring-4 ring-pink-400",
+      "voice_text": "Consumer insights reveal demographic patterns and customer behavior across regions."
+    },
+    {
+      "id": "yummy_intelligence",
+      "title": "🏪 Yummy FMCG Agent",
+      "content": "Yummy Intelligence specializes in inventory monitoring, promotion analysis, and competitive intelligence. Perfect for FMCG category management!",
+      "target": "[href='/yummy'], .yummy-panel",
+      "placement": "right",
+      "highlight_class": "ring-4 ring-orange-400",
+      "voice_text": "Yummy Intelligence provides specialized FMCG analysis including inventory and competitor monitoring."
+    },
+    {
+      "id": "chat_interface",
+      "title": "💬 AI Chat Assistants",
+      "content": "Two AI modes: Yummy Intelligence for FMCG-specific questions, and Enhanced Scout for general retail analytics. Ask natural language questions!",
+      "target": "[href='/chat'], .chat-interface",
+      "placement": "left",
+      "highlight_class": "ring-4 ring-blue-400",
+      "voice_text": "Chat with AI assistants using natural language for instant insights and recommendations."
+    },
+    {
+      "id": "data_quality",
+      "title": "✅ Live Production Data",
+      "content": "All data is live and production-ready from 5,000 real FMCG transactions across Philippine retail stores. No mock data here!",
+      "target": ".badge:contains('Live'), [class*='production']",
+      "placement": "top",
+      "highlight_class": "ring-4 ring-green-400",
+      "voice_text": "All dashboard data comes from real FMCG transactions in Philippine retail stores."
+    },
+    {
+      "id": "export_features",
+      "title": "📊 Data Export & Analysis",
+      "content": "Export filtered data as CSV from the All Transactions page. Perfect for deeper analysis in Excel or sharing with your team.",
+      "target": "[class*='export'], [href='/transactions']",
+      "placement": "bottom",
+      "highlight_class": "ring-4 ring-gray-400",
+      "voice_text": "Export capabilities let you download filtered data for offline analysis."
+    },
+    {
+      "id": "filter_combinations",
+      "title": "🎯 Pro Filter Tips",
+      "content": "Combine filters for powerful insights: Try 'Last 30 days + NCR + TBWA brands' for executive reporting, or 'Beverages + All regions + Competitors' for market analysis.",
+      "target": ".filter-bar",
+      "placement": "bottom",
+      "highlight_class": "ring-4 ring-purple-400",
+      "voice_text": "Combine multiple filters to create powerful, targeted business insights."
+    },
+    {
+      "id": "completion",
+      "title": "🏆 Walkthrough Complete!",
+      "content": "You're now ready to explore Scout Analytics! Remember: Use filters first, ask AI assistants questions, and look for yellow/orange highlights for TBWA insights. Happy analyzing! 🚀",
+      "target": "body",
+      "placement": "center",
+      "backdrop": true,
+      "voice_text": "Congratulations! You've completed the Scout Analytics walkthrough. Start exploring with your own business questions!"
+    }
+  ],
+  "callbacks": {
+    "onStart": "analytics.track('walkthrough_started')",
+    "onComplete": "analytics.track('walkthrough_completed')",
+    "onSkip": "analytics.track('walkthrough_skipped')",
+    "onStepChange": "analytics.track('walkthrough_step', { step_id: step.id })"
+  },
+  "keyboard_navigation": {
+    "enabled": true,
+    "next_key": "ArrowRight",
+    "prev_key": "ArrowLeft",
+    "skip_key": "Escape"
+  },
+  "accessibility": {
+    "focus_management": true,
+    "screen_reader_support": true,
+    "high_contrast_mode": false
+  },
+  "customization": {
+    "primary_color": "#003865",
+    "accent_color": "#FFC72C",
+    "background_color": "#F9FAFB",
+    "text_color": "#1A1A1A",
+    "border_radius": "0.75rem"
+  }
+}

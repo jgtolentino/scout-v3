@@ -1,0 +1,86 @@
+{
+  "name": "scout-analytics-v3",
+  "version": "3.1.0", 
+  "description": "Scout Analytics Dashboard - Philippine FMCG Intelligence Platform",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "retail",
+    "analytics",
+    "dashboard",
+    "insights",
+    "ai",
+    "validation",
+    "fmcg",
+    "intelligence",
+    "reporting",
+    "visualization"
+  ],
+  "author": "Retail Intelligence Platform",
+  "license": "MIT",
+  "dependencies": {
+    "@headlessui/react": "^2.2.4",
+    "@supabase/supabase-js": "^2.50.0",
+    "@tailwindcss/postcss": "^4.1.10",
+    "@vitejs/plugin-react": "^4.5.2",
+    "autoprefixer": "^10.4.21",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.515.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "react-router-dom": "^7.6.2",
+    "recharts": "^2.15.3",
+    "tailwindcss": "^4.1.10",
+    "vite": "^6.3.5",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jgtolentino/ai-agency.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jgtolentino/ai-agency/issues"
+  },
+  "homepage": "https://github.com/jgtolentino/ai-agency#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "agents",
+    "components",
+    "utils",
+    "config",
+    "scripts",
+    "README.md",
+    "package.json",
+    ".pulserrc",
+    "agent_manifest.yaml"
+  ]
+}

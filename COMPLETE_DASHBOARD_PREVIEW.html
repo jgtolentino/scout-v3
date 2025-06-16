@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scout Analytics MVP - Complete Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .kpi-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            transition: all 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .trend-up { color: #10b981; }
+        .trend-down { color: #ef4444; }
+        .chart-container { position: relative; height: 300px; }
+        .insight-card {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .category-segment {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .category-segment:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header Navigation -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <h1 class="text-2xl font-bold text-blue-600">
+                        <i class="fas fa-chart-line mr-2"></i>Scout Analytics MVP
+                    </h1>
+                    <nav class="hidden md:flex space-x-6">
+                        <a href="#" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-2">
+                            <i class="fas fa-home mr-1"></i>Overview
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-blue-600">
+                            <i class="fas fa-chart-area mr-1"></i>Trends
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-blue-600">
+                            <i class="fas fa-shopping-cart mr-1"></i>Products
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-blue-600">
+                            <i class="fas fa-users mr-1"></i>Consumers
+                        </a>
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-search mr-1"></i>Search
+                    </button>
+                    <button class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200">
+                        <i class="fas fa-cog mr-1"></i>Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6 py-6 space-y-6">
+        
+        <!-- Executive Dashboard Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-3xl font-bold mb-2">
+                        <i class="fas fa-tachometer-alt mr-2"></i>Executive Dashboard
+                    </h2>
+                    <p class="text-blue-100 text-lg">
+                        Real-time insights from <span class="font-semibold">5,247 transactions</span>
+                        • Philippine Retail Intelligence
+                    </p>
+                </div>
+                <div class="text-right">
+                    <div class="text-blue-200 text-sm">Last Updated</div>
+                    <div class="text-white font-semibold">14 Jun 2025 17:04</div>
+                    <div class="flex items-center mt-2">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2"></div>
+                        <span class="text-green-200 text-sm">Live Data</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Performance Indicators -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+            <!-- Revenue KPI -->
+            <div class="kpi-card bg-white rounded-xl p-6 border border-gray-200 shadow-sm cursor-pointer">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="bg-green-100 p-3 rounded-lg">
+                        <i class="fas fa-peso-sign text-green-600 text-xl"></i>
+                    </div>
+                    <span class="trend-up text-sm font-semibold">+12.5% ↗️</span>
+                </div>
+                <h3 class="text-gray-600 text-sm font-medium">Total Revenue</h3>
+                <p class="text-2xl font-bold text-gray-900">₱1,234,567</p>
+                <p class="text-xs text-gray-500 mt-1">vs last month</p>
+            </div>
+
+            <!-- Transactions KPI -->
+            <div class="kpi-card bg-white rounded-xl p-6 border border-gray-200 shadow-sm cursor-pointer">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="bg-blue-100 p-3 rounded-lg">
+                        <i class="fas fa-shopping-cart text-blue-600 text-xl"></i>
+                    </div>
+                    <span class="trend-up text-sm font-semibold">+8.3% ↗️</span>
+                </div>
+                <h3 class="text-gray-600 text-sm font-medium">Transactions</h3>
+                <p class="text-2xl font-bold text-gray-900">5,247</p>
+                <p class="text-xs text-gray-500 mt-1">total orders</p>
+            </div>
+
+            <!-- AOV KPI -->
+            <div class="kpi-card bg-white rounded-xl p-6 border border-gray-200 shadow-sm cursor-pointer">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="bg-purple-100 p-3 rounded-lg">
+                        <i class="fas fa-chart-line text-purple-600 text-xl"></i>
+                    </div>
+                    <span class="trend-up text-sm font-semibold">+3.2% ↗️</span>
+                </div>
+                <h3 class="text-gray-600 text-sm font-medium">Avg Order Value</h3>
+                <p class="text-2xl font-bold text-gray-900">₱235.41</p>
+                <p class="text-xs text-gray-500 mt-1">per transaction</p>
+            </div>
+
+            <!-- Units Sold KPI -->
+            <div class="kpi-card bg-white rounded-xl p-6 border border-gray-200 shadow-sm cursor-pointer">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="bg-orange-100 p-3 rounded-lg">
+                        <i class="fas fa-boxes text-orange-600 text-xl"></i>
+                    </div>
+                    <span class="trend-up text-sm font-semibold">+15.7% ↗️</span>
+                </div>
+                <h3 class="text-gray-600 text-sm font-medium">Units Sold</h3>
+                <p class="text-2xl font-bold text-gray-900">15,892</p>
+                <p class="text-xs text-gray-500 mt-1">total quantity</p>
+            </div>
+
+            <!-- Customers KPI -->
+            <div class="kpi-card bg-white rounded-xl p-6 border border-gray-200 shadow-sm cursor-pointer">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="bg-pink-100 p-3 rounded-lg">
+                        <i class="fas fa-users text-pink-600 text-xl"></i>
+                    </div>
+                    <span class="trend-up text-sm font-semibold">+6.9% ↗️</span>
+                </div>
+                <h3 class="text-gray-600 text-sm font-medium">Unique Customers</h3>
+                <p class="text-2xl font-bold text-gray-900">1,067</p>
+                <p class="text-xs text-gray-500 mt-1">active buyers</p>
+            </div>
+
+            <!-- Gross Margin KPI -->
+            <div class="kpi-card bg-white rounded-xl p-6 border border-gray-200 shadow-sm cursor-pointer">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="bg-emerald-100 p-3 rounded-lg">
+                        <i class="fas fa-percentage text-emerald-600 text-xl"></i>
+                    </div>
+                    <span class="trend-up text-sm font-semibold">+2.1% ↗️</span>
+                </div>
+                <h3 class="text-gray-600 text-sm font-medium">Gross Margin %</h3>
+                <p class="text-2xl font-bold text-gray-900">24.7%</p>
+                <p class="text-xs text-gray-500 mt-1">profit margin</p>
+            </div>
+        </div>
+
+        <!-- Main Analytics Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Revenue Trend Chart -->
+            <div class="lg:col-span-2 bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">
+                            <i class="fas fa-chart-area text-blue-600 mr-2"></i>Revenue Trend
+                        </h3>
+                        <p class="text-gray-600">Last 30 days performance</p>
+                    </div>
+                    <button class="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg text-sm hover:bg-blue-100">
+                        <i class="fas fa-expand-arrows-alt mr-1"></i>Fullscreen
+                    </button>
+                </div>
+                <div class="chart-container">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+                <div class="mt-4 text-center text-sm text-gray-500">
+                    <i class="fas fa-mouse-pointer mr-1"></i>Click data points for detailed trends
+                </div>
+            </div>
+
+            <!-- AI Insights Panel -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+                <h3 class="text-xl font-bold text-gray-900 mb-6">
+                    <i class="fas fa-robot text-purple-600 mr-2"></i>AI Insights
+                </h3>
+                
+                <!-- High Confidence Insight -->
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded">
+                            🔥 High Confidence
+                        </span>
+                        <span class="text-green-600 font-bold">92%</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-2">
+                        Electronics category showing <strong>23% week-over-week growth</strong>. 
+                        Consider increasing inventory.
+                    </p>
+                    <button class="text-green-600 text-xs hover:underline">
+                        <i class="fas fa-arrow-right mr-1"></i>View Details
+                    </button>
+                </div>
+
+                <!-- Opportunity Insight -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded">
+                            📊 Opportunity
+                        </span>
+                        <span class="text-yellow-600 font-bold">87%</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-2">
+                        Peak sales hours: <strong>2-4 PM</strong>. Staff scheduling optimization 
+                        could boost revenue by 8%.
+                    </p>
+                    <button class="text-yellow-600 text-xs hover:underline">
+                        <i class="fas fa-arrow-right mr-1"></i>Optimize Now
+                    </button>
+                </div>
+
+                <!-- Alert Insight -->
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded">
+                            ⚠️ Alert
+                        </span>
+                        <span class="text-red-600 font-bold">76%</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-2">
+                        Snacks category declining <strong>5%</strong>. 
+                        Consider promotional campaigns.
+                    </p>
+                    <button class="text-red-600 text-xs hover:underline">
+                        <i class="fas fa-arrow-right mr-1"></i>Create Campaign
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Quality Audit -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-shield-alt text-blue-600 text-xl"></i>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">Data Quality & KPI Validation</h3>
+                            <p class="text-gray-600">Live audit system ensuring data accuracy</p>
+                        </div>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
+                            Live Audit
+                        </span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-green-600">94.2%</div>
+                            <div class="text-sm text-gray-500">Quality Score</div>
+                        </div>
+                        <button class="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-100">
+                            <i class="fas fa-sync-alt mr-1"></i>Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Record Counts -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-3">
+                        <i class="fas fa-database text-green-600 mr-2"></i>Record Counts
+                    </h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Transactions:</span>
+                            <span class="font-semibold">5,247</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Products:</span>
+                            <span class="font-semibold">1,834</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Customers:</span>
+                            <span class="font-semibold">1,067</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Stores:</span>
+                            <span class="font-semibold">45</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revenue Validation -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-3">
+                        <i class="fas fa-check-circle text-green-600 mr-2"></i>Revenue Validation
+                    </h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Total:</span>
+                            <span class="font-semibold">₱1,234,567</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Calculated:</span>
+                            <span class="font-semibold">₱1,234,567</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Variance:</span>
+                            <span class="font-semibold text-green-600">₱0 (0.0%)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Status:</span>
+                            <span class="font-semibold text-green-600">✅ VALIDATED</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Coverage -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-3">
+                        <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>Data Coverage
+                    </h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Missing categories:</span>
+                            <span class="font-semibold text-yellow-600">2%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Missing brands:</span>
+                            <span class="font-semibold text-green-600">0.3%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Missing stores:</span>
+                            <span class="font-semibold text-green-600">0%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Coverage:</span>
+                            <span class="font-semibold text-green-600">97.7%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Performance and Top Categories -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Category Donut Chart -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+                <h3 class="text-xl font-bold text-gray-900 mb-6">
+                    <i class="fas fa-chart-pie text-purple-600 mr-2"></i>Category Performance
+                </h3>
+                <div class="chart-container mb-4">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+                <div class="text-center text-sm text-gray-500">
+                    <i class="fas fa-mouse-pointer mr-1"></i>Click segments for product details
+                </div>
+            </div>
+
+            <!-- Top Performing Categories -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+                <h3 class="text-xl font-bold text-gray-900 mb-6">
+                    <i class="fas fa-trophy text-yellow-600 mr-2"></i>Top Performing Categories
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">1</div>
+                            <span class="font-medium text-gray-900">Electronics</span>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm font-medium text-gray-900">₱432,098</div>
+                            <div class="text-xs text-green-600">📈 +15.3%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">2</div>
+                            <span class="font-medium text-gray-900">Food & Snacks</span>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm font-medium text-gray-900">₱345,679</div>
+                            <div class="text-xs text-red-600">📉 -2.1%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">3</div>
+                            <span class="font-medium text-gray-900">Clothing</span>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm font-medium text-gray-900">₱222,234</div>
+                            <div class="text-xs text-green-600">📈 +8.7%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">4</div>
+                            <span class="font-medium text-gray-900">Home & Garden</span>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm font-medium text-gray-900">₱148,123</div>
+                            <div class="text-xs text-green-600">📈 +12.4%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">5</div>
+                            <span class="font-medium text-gray-900">Books</span>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm font-medium text-gray-900">₱49,385</div>
+                            <div class="text-xs text-green-600">📈 +3.2%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Regional Insights -->
+        <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+            <h3 class="text-xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-map-marker-alt text-red-600 mr-2"></i>Regional Insights
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Top Cities -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">🏙️ Top Cities by Revenue</h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="font-medium">1. Manila</div>
+                                <div class="text-sm text-green-600">📈 +18.5%</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold">₱456,789</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="font-medium">2. Cebu</div>
+                                <div class="text-sm text-green-600">📈 +12.3%</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold">₱234,567</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="font-medium">3. Davao</div>
+                                <div class="text-sm text-green-600">📈 +9.8%</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold">₱189,012</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="font-medium">4. Iloilo</div>
+                                <div class="text-sm text-green-600">📈 +15.2%</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold">₱107,654</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transaction Distribution -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">📊 Transaction Distribution</h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span>Metro Manila</span>
+                            <span class="font-bold">45.2%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 45.2%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span>Cebu</span>
+                            <span class="font-bold">22.1%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 22.1%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span>Davao</span>
+                            <span class="font-bold">15.3%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-400 h-2 rounded-full" style="width: 15.3%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <span>Others</span>
+                            <span class="font-bold">17.4%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-300 h-2 rounded-full" style="width: 17.4%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Peak Hours -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">🕐 Peak Hours</h4>
+                    <div class="space-y-4">
+                        <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
+                            <div class="font-semibold text-yellow-800">🌅 9-11 AM</div>
+                            <div class="text-sm text-yellow-700">892 transactions</div>
+                        </div>
+                        
+                        <div class="bg-orange-50 p-3 rounded-lg border border-orange-200">
+                            <div class="font-semibold text-orange-800">🌞 2-4 PM</div>
+                            <div class="text-sm text-orange-700">1,247 transactions</div>
+                            <div class="text-xs text-orange-600 mt-1">Peak time!</div>
+                        </div>
+                        
+                        <div class="bg-purple-50 p-3 rounded-lg border border-purple-200">
+                            <div class="font-semibold text-purple-800">🌆 7-9 PM</div>
+                            <div class="text-sm text-purple-700">756 transactions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Analytics -->
+        <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+            <h3 class="text-xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-users text-pink-600 mr-2"></i>Customer Analytics
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Age Distribution -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">🎂 Age Distribution</h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span>18-25</span>
+                            <span class="font-bold">22.3%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-pink-400 h-2 rounded-full" style="width: 22.3%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span>26-35</span>
+                            <span class="font-bold text-pink-600">31.7%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-pink-600 h-2 rounded-full" style="width: 31.7%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span>36-45</span>
+                            <span class="font-bold">24.1%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-pink-500 h-2 rounded-full" style="width: 24.1%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span>46-55</span>
+                            <span class="font-bold">15.2%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-pink-400 h-2 rounded-full" style="width: 15.2%"></div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span>56+</span>
+                            <span class="font-bold">6.7%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-pink-300 h-2 rounded-full" style="width: 6.7%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gender Split -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">👫 Gender Split</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-pink-50 rounded-lg">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-venus text-pink-600"></i>
+                                <span>Female</span>
+                            </div>
+                            <span class="font-bold text-pink-600">58.4%</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-mars text-blue-600"></i>
+                                <span>Male</span>
+                            </div>
+                            <span class="font-bold text-blue-600">41.6%</span>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <h5 class="font-medium text-gray-700 mb-2">📊 Purchasing Patterns:</h5>
+                            <div class="text-sm space-y-1">
+                                <div class="flex justify-between">
+                                    <span>Female AOV:</span>
+                                    <span class="font-semibold">₱287</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Male AOV:</span>
+                                    <span class="font-semibold">₱198</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Income & Loyalty -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">💰 Income Brackets</h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span>A (>₱100K)</span>
+                            <span class="font-bold">18.2%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>B (₱50-100K)</span>
+                            <span class="font-bold">29.8%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>C (₱25-50K)</span>
+                            <span class="font-bold text-green-600">32.4%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>D (₱15-25K)</span>
+                            <span class="font-bold">14.7%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>E (<₱15K)</span>
+                            <span class="font-bold">4.9%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span>🔄 Repeat Customers:</span>
+                                <span class="font-bold text-blue-600">23.4%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>💎 VIP Customers:</span>
+                                <span class="font-bold">156</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>💰 Avg CLV:</span>
+                                <span class="font-bold">₱12,847</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Items -->
+        <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+            <h3 class="text-xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-bullseye text-red-600 mr-2"></i>Action Items
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- High Priority -->
+                <div>
+                    <h4 class="font-semibold text-red-700 mb-4">🔥 High Priority</h4>
+                    <div class="space-y-4">
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                            <h5 class="font-semibold text-red-800">⚠️ Restock 23 products</h5>
+                            <p class="text-sm text-red-700 mt-1">(Out of stock)</p>
+                            <p class="text-xs text-red-600 mt-2">Impact: -₱45K/week</p>
+                            <button class="mt-3 bg-red-600 text-white px-3 py-1 rounded text-xs hover:bg-red-700">
+                                View Items
+                            </button>
+                        </div>
+                        
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                            <h5 class="font-semibold text-red-800">🎨 Launch snacks promo</h5>
+                            <p class="text-sm text-red-700 mt-1">(Category declining)</p>
+                            <p class="text-xs text-red-600 mt-2">Est. boost: +8%</p>
+                            <button class="mt-3 bg-red-600 text-white px-3 py-1 rounded text-xs hover:bg-red-700">
+                                Create Campaign
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medium Priority -->
+                <div>
+                    <h4 class="font-semibold text-yellow-700 mb-4">📊 Medium Priority</h4>
+                    <div class="space-y-4">
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <h5 class="font-semibold text-yellow-800">📈 Optimize peak hours</h5>
+                            <p class="text-sm text-yellow-700 mt-1">staffing (2-4 PM)</p>
+                            <button class="mt-3 bg-yellow-600 text-white px-3 py-1 rounded text-xs hover:bg-yellow-700">
+                                Schedule Staff
+                            </button>
+                        </div>
+                        
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <h5 class="font-semibold text-yellow-800">📱 Improve mobile UX</h5>
+                            <p class="text-sm text-yellow-700 mt-1">(+15% conversion potential)</p>
+                            <button class="mt-3 bg-yellow-600 text-white px-3 py-1 rounded text-xs hover:bg-yellow-700">
+                                View Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div>
+                    <h4 class="font-semibold text-green-700 mb-4">💡 Recommendations</h4>
+                    <div class="space-y-4">
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <h5 class="font-semibold text-green-800">🎯 Focus on Manila</h5>
+                            <p class="text-sm text-green-700 mt-1">market growth</p>
+                            <button class="mt-3 bg-green-600 text-white px-3 py-1 rounded text-xs hover:bg-green-700">
+                                View Strategy
+                            </button>
+                        </div>
+                        
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <h5 class="font-semibold text-green-800">🛍️ Expand Electronics</h5>
+                            <p class="text-sm text-green-700 mt-1">inventory</p>
+                            <button class="mt-3 bg-green-600 text-white px-3 py-1 rounded text-xs hover:bg-green-700">
+                                Plan Inventory
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex flex-wrap items-center gap-4">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-download mr-2"></i>Export Data
+                    </button>
+                    <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200">
+                        <i class="fas fa-envelope mr-2"></i>Email Report
+                    </button>
+                    <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200">
+                        <i class="fas fa-sync-alt mr-2"></i>Refresh
+                    </button>
+                    <span class="text-sm text-gray-500">Auto: 5min</span>
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+                    <span>📅 Last 30 Days</span>
+                    <span>📍 All Philippines</span>
+                    <span>🏪 All Stores</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Revenue Trend Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['May 15', 'May 20', 'May 25', 'May 30', 'Jun 5', 'Jun 10', 'Jun 14'],
+                datasets: [{
+                    label: 'Daily Revenue',
+                    data: [25000, 28000, 32000, 35000, 38000, 42000, 45000],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#3b82f6',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '₱' + (value/1000) + 'K';
+                            }
+                        }
+                    }
+                },
+                elements: {
+                    point: {
+                        hoverRadius: 8
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                }
+            }
+        });
+
+        // Category Chart
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Electronics', 'Food & Snacks', 'Clothing', 'Home & Garden', 'Books', 'Others'],
+                datasets: [{
+                    data: [35, 28, 18, 12, 4, 3],
+                    backgroundColor: [
+                        '#3b82f6',
+                        '#10b981',
+                        '#f59e0b',
+                        '#ef4444',
+                        '#8b5cf6',
+                        '#6b7280'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+
+        // Add click handlers for interactive elements
+        document.querySelectorAll('.kpi-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    card.style.transform = 'translateY(-2px)';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
