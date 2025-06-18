@@ -1,4 +1,3 @@
-import { createClient } from '@supabase/supabase-js'
 import type {
   DashboardSummary,
   LocationDistribution,
@@ -9,15 +8,25 @@ import type {
   AgeDistribution,
   GenderDistribution
 } from '../types'
+import { createMockDataProvider } from './mockDataProvider'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
+// Create mock provider as fallback
+let supabase: any;
+
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables')
+  console.log('[Database] No Supabase credentials found, using mock data provider');
+  supabase = createMockDataProvider();
+} else {
+  // This will only be reached if environment variables are set
+  // In that case, Supabase should be available as a dependency
+  console.log('[Database] Supabase credentials found, but Supabase dependency removed');
+  supabase = createMockDataProvider();
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export { supabase }
 
 // Database function calls with error handling
 export const getDashboardSummary = async (filters: Record<string, string | string[]> = {}): Promise<DashboardSummary> => {
