@@ -51,7 +51,7 @@ const Tutorial: React.FC<TutorialProps> = ({ runTutorial, onTutorialComplete }) 
     },
     {
       target: 'body',
-      content: 'You've completed the tour! Feel free to explore and interact with the Scout AI.',
+      content: "You've completed the tour! Feel free to explore and interact with the Scout AI.",
       placement: 'center',
     },
   ]);
